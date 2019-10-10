@@ -112,13 +112,13 @@ def images_to_videos(images):
 def load_story():
 	with open(STORY_FILE_PATH) as f:
 		data = f.read()
-	return yaml.load(data)
+	return yaml.load(data, Loader=yaml.FullLoader)
 
 
 def load_transitions():
 	with open(TRANSITION_FILE_PATH) as f:
 		data = f.read()
-	return yaml.load(data)
+	return yaml.load(data, Loader=yaml.FullLoader)
 
 
 def overlay_videos(video_file_paths, output_file_path):
