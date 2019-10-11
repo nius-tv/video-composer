@@ -119,15 +119,15 @@ def generate_offset(duration):
 
 def get_formulas():
 	if random.randrange(2) == 0:
-		return [
+		return (
 			'x=t*(in_w-out_w)/{}'.format(IMAGE_ANIMATION_SPEED_X),
 			'x=(in_w-out_w)-t*(in_w-out_w)/{}'.format(IMAGE_ANIMATION_SPEED_X)
-		]
+		)
 	else:
-		return [
+		return (
 			'y=t*(in_h-out_h)/{}'.format(IMAGE_ANIMATION_SPEED_Y),
 			'y=(in_h-out_h)-t*(in_h-out_h)/7'.format(IMAGE_ANIMATION_SPEED_Y)
-		]
+		)
 
 
 def image_to_video(image_file_path, output_file_path, duration=IMAGE_DURATION):
@@ -249,8 +249,8 @@ if __name__ == '__main__':
 	]
 	overlay_videos(video_file_paths, IMAGES_TRANSITIONS_FILE_PATH)
 
-	video_file_paths = [
+	video_file_paths = (
 		VIDEO_FILE_PATH,
 		IMAGES_TRANSITIONS_FILE_PATH
-	]
+	)
 	overlay_videos(video_file_paths, FINAL_VIDEO_FILE_PATH)
