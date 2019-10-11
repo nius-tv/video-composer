@@ -125,7 +125,7 @@ def get_formulas():
 		]
 
 
-def image_to_video(image_file_path, output_file_path):
+def image_to_video(image_file_path, output_file_path, duration=IMAGE_DURATION):
 	image = Image.open(image_file_path)
 	formulas = get_formulas()
 	cmd = 'ffmpeg \
@@ -141,7 +141,7 @@ def image_to_video(image_file_path, output_file_path):
 		-pix_fmt {pixel_fmt} \
 		{output_file_path}'.format(
 			image_file_path=image_file_path,
-			duration=IMAGE_DURATION,
+			duration=duration,
 			fps=FPS,
 			image_width=image.size[0],
 			image_height=image.size[1],
