@@ -66,7 +66,7 @@ def create_transitions(transitions_start, transition_file_path, mid_offset, vide
 			concat_file_paths = (INIT_TRANSPARENT_FILE_PATH,)
 		# We use "last_i - 1" as the last video is actually a transparent video,
 		# which prevents the last image to "stick" until the end.
-		if not i == 0 and not i == last_i - 1 and not TRANSITIONS_BETWEEN_IMAGES:
+		if not i == 0 and not i == last_i - 1 and not TRANSITIONS_BETWEEN_IMAGES_ANIMATION:
 			continue
 		if i == last_i - 1 and not TRANSITIONS_END:
 			continue
