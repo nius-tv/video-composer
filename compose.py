@@ -61,10 +61,15 @@ def create_transitions(transitions_start, transition_file_path, mid_offset, vide
 	last_i = len(tmp_video_file_paths) - 1
 
 	for i, video_file_path in enumerate(tmp_video_file_paths):
-		if not i == 0 and not i == last_i and not TRANSITIONS_BETWEEN_IMAGES:
+		# We use "last_i - 1" as the last video is actually a transparent video,
+		# which prevents the last image to "stick" until the end.
+		if not i == 0 and not i == last_i - 1 and not TRANSITIONS_BETWEEN_IMAGES:
 			continue
-		if i == last_i and not TRANSITIONS_END:
+		if i == last_i - 1 and not TRANSITIONS_END:
 			continue
+		# Here we break as the last video is a transparent video.
+		if i == last_i:
+			break
 
 		image_start = float(transitions_start) - float(mid_offset) + float(IMAGE_DURATION * i)
 		generate_offset(duration=image_start)
@@ -158,8 +163,12 @@ def images_to_videos(images):
 	output_file_paths = []
 
 	for i, image_name in enumerate(images):
-		input_file_path = '{}/{}'.format(ASSETS_DIR_PATH, image_name)
-		filename = image_name.split('.')[0]
+		if not image_name == TRANSPARENT_IMAGE_FILE_PATH:
+			input_file_path = '{}/{}'.format(ASSETS_DIR_PATH, image_name)
+		else:
+			input_file_path = image_name
+
+		filename = image_name.split('/')[-1].split('.')[0]
 		output_file_path = '{}/tmp/{}-image.{}'.format(ASSETS_DIR_PATH, filename, VIDEO_FMT)
 		output_file_paths.append(output_file_path)
 
@@ -205,10 +214,15 @@ if __name__ == '__main__':
 	story = load_story()
 	transitions = load_transitions()
 
+	image_to_video(TRANSPARENT_IMAGE_FILE_PATH,
+				   TRANSPARENT_VIDEO_FILE_PATH,
+				   TRANSPARENT_VIDEO_DURATION)
+
 	transitions_start = story['transitions']['start']
 	generate_offset(transitions_start)
 
 	images = story['transitions']['images']
+	images.append(TRANSPARENT_IMAGE_FILE_PATH)
 	video_file_paths = images_to_videos(images)
 
 	concat_file_paths = [GEN_TRANSPARENT_FILE_PATH]
