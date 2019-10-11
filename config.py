@@ -5,7 +5,7 @@ LIBRARY_DIR_PATH = '/library'
 # End of sensitive variables
 FINAL_VIDEO_FILE_PATH = '{}/video.mov'.format(TMP_DIR_PATH)
 FPS = 30
-GEN_TRANSPARENT_FILE_PATH = '{}/gen-transparent.mov'.format(TMP_DIR_PATH)
+INIT_TRANSPARENT_FILE_PATH = '{}/init-transparent.mov'.format(TMP_DIR_PATH)
 IMAGE_ANIMATION_SPEED_Y = 7
 IMAGE_ANIMATION_SPEED_X = 10
 IMAGE_DURATION = 4

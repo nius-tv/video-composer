@@ -53,7 +53,7 @@ def compute_overlays(filters):
 def create_transitions(transitions_start, transition_file_path, mid_offset, video_file_paths):
 	output_file_paths = []
 	concat_file_paths = (
-		GEN_TRANSPARENT_FILE_PATH,
+		INIT_TRANSPARENT_FILE_PATH,
 		transition_file_path
 	)
 	tmp_video_file_paths = video_file_paths[:] # clone array
@@ -113,7 +113,7 @@ def generate_offset(duration):
 			duration=duration,
 			video_codec=VIDEO_CODEC,
 			pixel_fmt=PIXEL_FMT,
-			output_file_path=GEN_TRANSPARENT_FILE_PATH)
+			output_file_path=INIT_TRANSPARENT_FILE_PATH)
 	subprocess.call(['bash', '-c', cmd])
 
 
@@ -225,7 +225,7 @@ if __name__ == '__main__':
 	images.append(TRANSPARENT_IMAGE_FILE_PATH)
 	video_file_paths = images_to_videos(images)
 
-	concat_file_paths = [GEN_TRANSPARENT_FILE_PATH]
+	concat_file_paths = [INIT_TRANSPARENT_FILE_PATH]
 	concat_file_paths.extend(video_file_paths)
 	concat_videos(concat_file_paths, IMAGES_VIDEO_FILE_PATH)
 
