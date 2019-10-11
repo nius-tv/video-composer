@@ -6,6 +6,7 @@ RUN apt-get install -y ffmpeg
 RUN apt-get install -y python3.5
 RUN apt-get install -y python3-pip
 
+RUN pip3 install image==1.5.27
 RUN pip3 install pyyaml==5.1.2
 
 ADD . /app

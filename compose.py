@@ -2,6 +2,7 @@ import subprocess
 import yaml
 
 from config import *
+from PIL import Image
 
 
 def concat_videos(video_file_paths, output_file_path):
