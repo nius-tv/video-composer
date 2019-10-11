@@ -78,13 +78,15 @@ def generate_offset(duration):
 
 def get_formulas():
 	if random.randrange(2) == 0:
-		formulas_x = ['t*(in_w-out_w)', '(in_w-out_w)-t*(in_w-out_w)']
-		formulas_y = [0]
+		return [
+			'x=t*(in_w-out_w)/{}'.format(IMAGE_ANIMATION_SPEED_X),
+			'x=(in_w-out_w)-t*(in_w-out_w)/{}'.format(IMAGE_ANIMATION_SPEED_X)
+		]
 	else:
-		formulas_x = [0]
-		formulas_y = ['t*(in_h-out_h)', '(in_h-out_h)-t*(in_h-out_h)']
-
-	return formulas_x, formulas_y
+		return [
+			'y=t*(in_h-out_h)/{}'.format(IMAGE_ANIMATION_SPEED_Y),
+			'y=(in_h-out_h)-t*(in_h-out_h)/7'.format(IMAGE_ANIMATION_SPEED_Y)
+		]
 
 
 def image_to_video(image_file_path, output_file_path):
@@ -98,7 +100,7 @@ def image_to_video(image_file_path, output_file_path):
 		-filter_complex " \
 			fps={fps}, \
 			scale=w={image_width}:h={image_height}, \
-			crop={video_width}:{video_height}:{f_x}:{f_y}/{speed}" \
+			crop=w={video_width}:h={video_height}:{xy}" \
 		-c:v {video_codec} \
 		-pix_fmt {pixel_fmt} \
 		{output_file_path}'.format(
@@ -109,9 +111,7 @@ def image_to_video(image_file_path, output_file_path):
 			image_height=image.size[1],
 			video_width=VIDEO_SIZE[0],
 			video_height=VIDEO_SIZE[1],
-			f_x=random.choice(formulas[0]),
-			f_y=random.choice(formulas[1]),
-			speed=IMAGE_ANIMATION_SPEED,
+			xy=random.choice(formulas),
 			video_codec=VIDEO_CODEC,
 			pixel_fmt=PIXEL_FMT,
 			output_file_path=output_file_path)
