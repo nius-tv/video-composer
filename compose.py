@@ -4,6 +4,7 @@ import yaml
 
 from config import *
 from PIL import Image
+from shutil import copyfile
 
 
 def concat_videos(video_file_paths, output_file_path):
@@ -212,7 +213,10 @@ if __name__ == '__main__':
 											   mid_offset,
 											   video_file_paths)
 
-	overlay_videos(transition_file_paths, TRANSITIONS_FILE_PATH)
+	if len(transition_file_paths) > 1:
+		overlay_videos(transition_file_paths, TRANSITIONS_FILE_PATH)
+	else:
+		copyfile(transition_file_paths[0], TRANSITIONS_FILE_PATH)
 
 	video_file_paths = [
 		IMAGES_VIDEO_FILE_PATH,
