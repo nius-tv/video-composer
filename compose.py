@@ -222,15 +222,20 @@ if __name__ == '__main__':
 				   TRANSPARENT_VIDEO_DURATION)
 
 	transitions_start = story['transitions']['start']
-	generate_offset(transitions_start)
+
+	if transitions_start > 0:
+		generate_offset(transitions_start)
 
 	images = story['transitions']['images']
 	images.append(TRANSPARENT_IMAGE_FILE_PATH)
 	video_file_paths = images_to_videos(images)
 
-	concat_file_paths = [INIT_TRANSPARENT_FILE_PATH]
-	concat_file_paths.extend(video_file_paths)
-	concat_videos(concat_file_paths, IMAGES_VIDEO_FILE_PATH)
+	if transitions_start > 0:
+		concat_file_paths = [INIT_TRANSPARENT_FILE_PATH]
+		concat_file_paths.extend(video_file_paths)
+		concat_videos(concat_file_paths, IMAGES_VIDEO_FILE_PATH)
+	else:
+		concat_videos(video_file_paths, IMAGES_VIDEO_FILE_PATH)
 
 	default_transition = transitions[TRANSITION_ID]
 	animation_filename = default_transition['name']
@@ -241,16 +246,21 @@ if __name__ == '__main__':
 											   mid_offset,
 											   video_file_paths)
 
-	if len(transition_file_paths) > 1:
+	num_transitions = len(transition_file_paths)
+
+	if num_transitions > 1:
 		overlay_videos(transition_file_paths, TRANSITIONS_FILE_PATH)
-	else:
+	elif num_transitions == 1:
 		copyfile(transition_file_paths[0], TRANSITIONS_FILE_PATH)
 
-	video_file_paths = [
-		IMAGES_VIDEO_FILE_PATH,
-		TRANSITIONS_FILE_PATH
-	]
-	overlay_videos(video_file_paths, IMAGES_TRANSITIONS_FILE_PATH)
+	if num_transitions > 0:
+		video_file_paths = (
+			IMAGES_VIDEO_FILE_PATH,
+			TRANSITIONS_FILE_PATH
+		)
+		overlay_videos(video_file_paths, IMAGES_TRANSITIONS_FILE_PATH)
+	else:
+		copyfile(IMAGES_VIDEO_FILE_PATH, IMAGES_TRANSITIONS_FILE_PATH)
 
 	video_file_paths = (
 		VIDEO_FILE_PATH,
