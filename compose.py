@@ -88,6 +88,7 @@ def get_formulas():
 
 
 def image_to_video(image_file_path, output_file_path):
+	image = Image.open(image_file_path)
 	formulas = get_formulas()
 	cmd = 'ffmpeg \
 		-y \
@@ -102,6 +103,8 @@ def image_to_video(image_file_path, output_file_path):
 			fps=FPS,
 			width=VIDEO_SIZE[0],
 			height=VIDEO_SIZE[1],
+			image_width=image.size[0],
+			image_height=image.size[1],
 			f_x=random.choice(formulas[0]),
 			f_y=random.choice(formulas[1]),
 			video_codec=VIDEO_CODEC,
