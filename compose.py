@@ -95,6 +95,10 @@ def image_to_video(image_file_path, output_file_path):
 		-loop 1 \
 		-i {image_file_path} \
 		-t {duration} \
+		-filter_complex " \
+			fps={fps}, \
+			scale=w={image_width}:h={image_height}, \
+			crop={video_width}:{video_height}:{f_x}:{f_y}/{speed}" \
 		-c:v {video_codec} \
 		-pix_fmt {pixel_fmt} \
 		{output_file_path}'.format(
