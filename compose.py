@@ -72,6 +72,9 @@ def create_transitions(transitions_start, transition_file_path, mid_offset, vide
 			break
 
 		image_start = float(transitions_start) - float(mid_offset) + float(IMAGE_DURATION * i)
+		if image_start < 0:
+			continue
+
 		generate_offset(duration=image_start)
 
 		if not video_file_path == tmp_video_file_paths[-1]:
