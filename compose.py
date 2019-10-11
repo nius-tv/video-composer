@@ -107,6 +107,7 @@ def image_to_video(image_file_path, output_file_path):
 			video_height=VIDEO_SIZE[1],
 			f_x=random.choice(formulas[0]),
 			f_y=random.choice(formulas[1]),
+			speed=IMAGE_ANIMATION_SPEED,
 			video_codec=VIDEO_CODEC,
 			pixel_fmt=PIXEL_FMT,
 			output_file_path=output_file_path)
