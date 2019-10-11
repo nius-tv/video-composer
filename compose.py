@@ -57,7 +57,7 @@ def create_transitions(transitions_start, transition_file_path, mid_offset, vide
 	last_i = len(tmp_video_file_paths) - 1
 
 	for i, video_file_path in enumerate(tmp_video_file_paths):
-		if not i == 0 or TRANSITIONS_START:
+		if not i == 0 or TRANSITIONS_START_ANIMATION:
 			concat_file_paths = (
 				INIT_TRANSPARENT_FILE_PATH,
 				transition_file_path
