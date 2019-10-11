@@ -55,12 +55,15 @@ def create_transitions(transitions_start, transition_file_path, mid_offset, vide
 	tmp_video_file_paths = video_file_paths[:] # clone array
 	tmp_video_file_paths.append('end') # end transition
 	last_i = len(tmp_video_file_paths) - 1
-	concat_file_paths = (
-		INIT_TRANSPARENT_FILE_PATH,
-		transition_file_path
-	)
 
 	for i, video_file_path in enumerate(tmp_video_file_paths):
+		if not i == 0 or TRANSITIONS_START:
+			concat_file_paths = (
+				INIT_TRANSPARENT_FILE_PATH,
+				transition_file_path
+			)
+		else:
+			concat_file_paths = (INIT_TRANSPARENT_FILE_PATH,)
 		# We use "last_i - 1" as the last video is actually a transparent video,
 		# which prevents the last image to "stick" until the end.
 		if not i == 0 and not i == last_i - 1 and not TRANSITIONS_BETWEEN_IMAGES:
