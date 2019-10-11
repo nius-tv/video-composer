@@ -1,3 +1,4 @@
+import random
 import subprocess
 import yaml
 
@@ -75,13 +76,24 @@ def generate_offset(duration):
 	subprocess.call(['bash', '-c', cmd])
 
 
+def get_formulas():
+	if random.randrange(2) == 0:
+		formulas_x = ['t*(in_w-out_w)', '(in_w-out_w)-t*(in_w-out_w)']
+		formulas_y = [0]
+	else:
+		formulas_x = [0]
+		formulas_y = ['t*(in_h-out_h)', '(in_h-out_h)-t*(in_h-out_h)']
+
+	return formulas_x, formulas_y
+
+
 def image_to_video(image_file_path, output_file_path):
+	formulas = get_formulas()
 	cmd = 'ffmpeg \
 		-y \
 		-loop 1 \
 		-i {image_file_path} \
 		-t {duration} \
-		-vf fps={fps},crop={width}:{height}:0:0 \
 		-c:v {video_codec} \
 		-pix_fmt {pixel_fmt} \
 		{output_file_path}'.format(
@@ -90,6 +102,8 @@ def image_to_video(image_file_path, output_file_path):
 			fps=FPS,
 			width=VIDEO_SIZE[0],
 			height=VIDEO_SIZE[1],
+			f_x=random.choice(formulas[0]),
+			f_y=random.choice(formulas[1]),
 			video_codec=VIDEO_CODEC,
 			pixel_fmt=PIXEL_FMT,
 			output_file_path=output_file_path)
