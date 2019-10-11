@@ -52,13 +52,13 @@ def compute_overlays(filters):
 
 def create_transitions(transitions_start, transition_file_path, mid_offset, video_file_paths):
 	output_file_paths = []
+	tmp_video_file_paths = video_file_paths[:] # clone array
+	tmp_video_file_paths.append('end') # end transition
+	last_i = len(tmp_video_file_paths) - 1
 	concat_file_paths = (
 		INIT_TRANSPARENT_FILE_PATH,
 		transition_file_path
 	)
-	tmp_video_file_paths = video_file_paths[:] # clone array
-	tmp_video_file_paths.append('end') # end transition
-	last_i = len(tmp_video_file_paths) - 1
 
 	for i, video_file_path in enumerate(tmp_video_file_paths):
 		# We use "last_i - 1" as the last video is actually a transparent video,
