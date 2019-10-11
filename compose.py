@@ -145,6 +145,7 @@ def load_transitions():
 
 
 def overlay_videos(video_file_paths, output_file_path):
+	assert len(video_file_paths) > 1
 	inputs, filters = generate_inputs_and_filters(video_file_paths)
 	cmd = 'ffmpeg \
 		-y \
