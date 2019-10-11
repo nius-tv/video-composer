@@ -104,7 +104,7 @@ def generate_offset(duration):
 		-c:v {video_codec} \
 		-pix_fmt {pixel_fmt} \
 		{output_file_path}'.format(
-			input_file_path=TRANSPARENT_FILE_PATH,
+			input_file_path=TRANSPARENT_VIDEO_FILE_PATH,
 			duration=duration,
 			video_codec=VIDEO_CODEC,
 			pixel_fmt=PIXEL_FMT,

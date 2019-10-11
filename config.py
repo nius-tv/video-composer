@@ -5,7 +5,7 @@ LIBRARY_DIR_PATH = '/library'
 # End of sensitive variables
 FINAL_VIDEO_FILE_PATH = '{}/video.mov'.format(TMP_DIR_PATH)
 FPS = 30
-GEN_TRANSPARENT_FILE_PATH = '{}/transparent.mov'.format(TMP_DIR_PATH)
+GEN_TRANSPARENT_FILE_PATH = '{}/gen-transparent.mov'.format(TMP_DIR_PATH)
 IMAGE_ANIMATION_SPEED_Y = 7
 IMAGE_ANIMATION_SPEED_X = 10
 IMAGE_DURATION = 4
@@ -19,7 +19,7 @@ TRANSITIONS_BETWEEN_IMAGES = True
 TRANSITIONS_END = False
 TRANSITIONS_FILE_PATH = '{}/transitions.mov'.format(TMP_DIR_PATH)
 TRANSITIONS_LIBRARY_DIR_PATH = '{}/transitions'.format(LIBRARY_DIR_PATH)
-TRANSPARENT_FILE_PATH = '{}/transparent-30fps-512x1024.mov'.format(LIBRARY_DIR_PATH)
+TRANSPARENT_VIDEO_FILE_PATH = '{}/transparent.mov'.format(TMP_DIR_PATH)
 VIDEO_CODEC = 'qtrle'
 VIDEO_FILE_PATH = '{}/video.mp4'.format(ASSETS_DIR_PATH)
 VIDEO_FMT = 'mov'
