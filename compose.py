@@ -56,12 +56,23 @@ def create_transitions(transitions_start, transition_file_path, mid_offset, vide
 		GEN_TRANSPARENT_FILE_PATH,
 		transition_file_path
 	)
+	tmp_video_file_paths = video_file_paths[:] # clone array
+	tmp_video_file_paths.append('end') # end transition
+	last_i = len(tmp_video_file_paths) - 1
 
-	for i, video_file_path in enumerate(video_file_paths):
+	for i, video_file_path in enumerate(tmp_video_file_paths):
+		if not i == 0 and not i == last_i and not TRANSITIONS_BETWEEN_IMAGES:
+			continue
+		if i == last_i and not TRANSITIONS_END:
+			continue
+
 		image_start = float(transitions_start) - float(mid_offset) + float(IMAGE_DURATION * i)
 		generate_offset(duration=image_start)
 
-		filename = video_file_path.split('/')[-1].split('.')[0]
+		if not video_file_path == tmp_video_file_paths[-1]:
+			filename = video_file_path.split('/')[-1].split('.')[0]
+		else:
+			filename = video_file_path
 		output_file_path = '{}/tmp/{}-transition.mov'.format(ASSETS_DIR_PATH, filename)
 		output_file_paths.append(output_file_path)
 
