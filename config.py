@@ -6,6 +6,7 @@ LIBRARY_DIR_PATH = '/library'
 FINAL_VIDEO_FILE_PATH = '{}/video.mov'.format(TMP_DIR_PATH)
 FPS = 30
 GEN_TRANSPARENT_FILE_PATH = '{}/transparent.mov'.format(TMP_DIR_PATH)
+IMAGE_ANIMATION_SPEED = 15
 IMAGE_DURATION = 4
 IMAGES_TRANSITIONS_FILE_PATH = '{}/images-transitions.mov'.format(TMP_DIR_PATH)
 IMAGES_VIDEO_FILE_PATH = '{}/images.mov'.format(TMP_DIR_PATH)
