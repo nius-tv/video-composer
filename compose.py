@@ -50,7 +50,7 @@ def compute_overlays(filters):
 	return overlays, last_v_ref
 
 
-def create_transitions(transitions_start, transition_file_path, mid_offset, video_file_paths):
+def create_transitions(transition_file_path, mid_offset, video_file_paths):
 	output_file_paths = []
 	tmp_video_file_paths = video_file_paths[:] # clone array
 	tmp_video_file_paths.append('end') # end transition
@@ -74,7 +74,7 @@ def create_transitions(transitions_start, transition_file_path, mid_offset, vide
 		if i == last_i:
 			break
 
-		image_start = float(transitions_start) - float(mid_offset) + float(IMAGE_DURATION * i)
+		image_start = float(TRANSITIONS_START) - float(mid_offset) + float(IMAGE_DURATION * i)
 		if image_start < 0:
 			continue
 
@@ -224,16 +224,14 @@ if __name__ == '__main__':
 				   TRANSPARENT_VIDEO_FILE_PATH,
 				   TRANSPARENT_VIDEO_DURATION)
 
-	transitions_start = story['transitions']['start']
-
-	if transitions_start > 0:
-		generate_offset(transitions_start)
+	if TRANSITIONS_START > 0:
+		generate_offset(TRANSITIONS_START)
 
 	images = story['transitions']['images']
 	images.append(TRANSPARENT_IMAGE_FILE_PATH)
 	video_file_paths = images_to_videos(images)
 
-	if transitions_start > 0:
+	if TRANSITIONS_START > 0:
 		concat_file_paths = [INIT_TRANSPARENT_FILE_PATH]
 		concat_file_paths.extend(video_file_paths)
 		concat_videos(concat_file_paths, IMAGES_VIDEO_FILE_PATH)
@@ -244,8 +242,7 @@ if __name__ == '__main__':
 	animation_filename = default_transition['name']
 	animation_file_path = '{}/{}'.format(TRANSITIONS_LIBRARY_DIR_PATH, animation_filename)
 	mid_offset = default_transition['mid']
-	transition_file_paths = create_transitions(transitions_start,
-											   animation_file_path,
+	transition_file_paths = create_transitions(animation_file_path,
 											   mid_offset,
 											   video_file_paths)
 
