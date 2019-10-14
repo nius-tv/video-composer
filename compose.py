@@ -35,26 +35,22 @@ def compute_audio_maps(num_videos):
 	return maps
 
 
-def concat_videos(video_file_paths, output_file_path):
-	inputs, filters = generate_inputs_and_filters(video_file_paths)
-	cmd = 'ffmpeg \
-		-y \
-		{inputs} \
-		-filter_complex "{filters}concat=n={num_videos}:v=1:a=0[v]" \
-		-map [a] \
-		-map [v] \
-		-c:a {audio_codec} \
-		-c:v {video_codec} \
-		-pix_fmt {pixel_fmt} \
-		{output_file_path}'.format(
-			inputs=' '.join(inputs),
-			filters=''.join(filters),
-			num_videos=len(filters),
-			audio_codec=AUDIO_CODEC,
-			video_codec=VIDEO_CODEC,
-			pixel_fmt=PIXEL_FMT,
-			output_file_path=output_file_path)
-	subprocess.call(['bash', '-c', cmd])
+def compute_inputs_and_filters(video_file_paths, with_audio=True):
+	inputs = []
+	filters = []
+
+	for i, video_file_path in enumerate(video_file_paths):
+		cmd = '-i {}'.format(video_file_path)
+		inputs.append(cmd)
+
+		if with_audio:
+			cmd = '[{i}:v][{i}:a]'.format(i=i)
+		else:
+			cmd = '[{}:v]'.format(i)
+
+		filters.append(cmd)
+
+	return inputs, filters
 
 
 def compute_overlays(filters):
@@ -79,6 +75,28 @@ def compute_overlays(filters):
 		last_v_ref = next_v_ref
 
 	return overlays, last_v_ref
+
+
+def concat_videos(video_file_paths, output_file_path):
+	inputs, filters = compute_inputs_and_filters(video_file_paths)
+	cmd = 'ffmpeg \
+		-y \
+		{inputs} \
+		-filter_complex "{filters}concat=n={num_videos}:v=1:a=1:unsafe=1[v][a]" \
+		-map [a] \
+		-map [v] \
+		-c:a {audio_codec} \
+		-c:v {video_codec} \
+		-pix_fmt {pixel_fmt} \
+		{output_file_path}'.format(
+			inputs=' '.join(inputs),
+			filters=''.join(filters),
+			num_videos=len(filters),
+			audio_codec=AUDIO_CODEC,
+			video_codec=VIDEO_CODEC,
+			pixel_fmt=PIXEL_FMT,
+			output_file_path=output_file_path)
+	subprocess.call(['bash', '-c', cmd])
 
 
 def create_transitions(transition_file_path, mid_offset, video_file_paths):
@@ -121,24 +139,6 @@ def create_transitions(transition_file_path, mid_offset, video_file_paths):
 		concat_videos(concat_file_paths, output_file_path)
 
 	return output_file_paths
-
-
-def generate_inputs_and_filters(video_file_paths, with_audio=True):
-	inputs = []
-	filters = []
-
-	for i, video_file_path in enumerate(video_file_paths):
-		cmd = '-i {}'.format(video_file_path)
-		inputs.append(cmd)
-
-		if with_audio:
-			cmd = '[{i}:v][{i}:a]'.format(i=i)
-		else:
-			cmd = '[{}:v]'.format(i)
-
-		filters.append(cmd)
-
-	return inputs, filters
 
 
 def generate_offset(duration):
@@ -228,7 +228,6 @@ def image_to_video(image_file_path, output_file_path, duration=IMAGE_DURATION):
 	add_silence_to_video(tmp_output_file_path, output_file_path)
 
 
-
 def images_to_videos(images):
 	output_file_paths = []
 
@@ -261,7 +260,7 @@ def load_transitions():
 
 def overlay_videos(video_file_paths, output_file_path):
 	assert len(video_file_paths) > 1
-	inputs, filters = generate_inputs_and_filters(video_file_paths, with_audio=False)
+	inputs, filters = compute_inputs_and_filters(video_file_paths, with_audio=False)
 	overlays, last_v_ref = compute_overlays(filters)
 	audio_maps = compute_audio_maps(len(video_file_paths))
 	cmd = 'ffmpeg \
