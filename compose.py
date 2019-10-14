@@ -138,6 +138,19 @@ def generate_offset(duration):
 			video_codec=VIDEO_CODEC,
 			pixel_fmt=PIXEL_FMT,
 			output_file_path=INIT_TRANSPARENT_FILE_PATH)
+
+
+def generate_silence(duration):
+	cmd = 'ffmpeg \
+		-y \
+		-f lavfi \
+		-i anullsrc \
+		-t {duration} \
+		-c:a {audio_codec} \
+		{output_file_path}'.format(
+			duration=duration,
+			audio_codec=AUDIO_CODEC,
+			output_file_path=SILENCE_AUDIO_FILE_PATH)
 	subprocess.call(['bash', '-c', cmd])
 
 
