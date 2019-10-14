@@ -1,6 +1,6 @@
 docker run \
--v $(PWD):/app \
--v $(PWD)/assets:/assets \
--v $(PWD)/library:/library \
+-v $(pwd)/video-composer:/app \
+-v $(pwd)/video-composer/assets:/assets \
+-v $(pwd)/effects:/library \
 -it video-composer \
 bash
