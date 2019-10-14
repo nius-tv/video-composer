@@ -3,6 +3,7 @@ ASSETS_DIR_PATH = '/assets'
 TMP_DIR_PATH = '{}/tmp'.format(ASSETS_DIR_PATH)
 LIBRARY_DIR_PATH = '/library'
 # End of sensitive variables
+AUDIO_CODEC = 'pcm_s16le'
 FINAL_VIDEO_FILE_PATH = '{}/video.mov'.format(TMP_DIR_PATH)
 FPS = 30
 INIT_TRANSPARENT_FILE_PATH = '{}/init-transparent.mov'.format(TMP_DIR_PATH)
