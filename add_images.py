@@ -331,7 +331,7 @@ if __name__ == '__main__':
 		copyfile(IMAGES_VIDEO_FILE_PATH, IMAGES_TRANSITIONS_FILE_PATH)
 
 	video_file_paths = (
-		VIDEO_FILE_PATH,
+		STORY_WITH_BACKGROUND_FILE_PATH,
 		IMAGES_TRANSITIONS_FILE_PATH
 	)
 	overlay_videos(video_file_paths, FINAL_VIDEO_FILE_PATH)
