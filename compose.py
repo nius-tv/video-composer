@@ -123,7 +123,7 @@ def create_transitions(transition_file_path, mid_offset, video_file_paths):
 	return output_file_paths
 
 
-def generate_inputs_and_filters(video_file_paths):
+def generate_inputs_and_filters(video_file_paths, with_audio=True):
 	inputs = []
 	filters = []
 
@@ -131,7 +131,11 @@ def generate_inputs_and_filters(video_file_paths):
 		cmd = '-i {}'.format(video_file_path)
 		inputs.append(cmd)
 
-		cmd = '[{}:v]'.format(i)
+		if with_audio:
+			cmd = '[{i}:v][{i}:a]'.format(i=i)
+		else:
+			cmd = '[{}:v]'.format(i)
+
 		filters.append(cmd)
 
 	return inputs, filters
