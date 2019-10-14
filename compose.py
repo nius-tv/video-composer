@@ -25,6 +25,16 @@ def add_silence_to_video(input_file_path, output_file_path):
 	subprocess.call(['bash', '-c', cmd])
 
 
+def compute_audio_maps(num_videos):
+	maps = []
+	
+	for i in range(num_videos):
+		audio_map = '-map {}:a'.format(i)
+		maps.append(audio_map)
+
+	return maps
+
+
 def concat_videos(video_file_paths, output_file_path):
 	inputs, filters = generate_inputs_and_filters(video_file_paths)
 	cmd = 'ffmpeg \
