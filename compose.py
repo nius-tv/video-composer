@@ -108,11 +108,11 @@ def create_transitions(transition_file_path, mid_offset, video_file_paths):
 	for i, video_file_path in enumerate(tmp_video_file_paths):
 		if not i == 0 or TRANSITIONS_START_ANIMATION:
 			concat_file_paths = (
-				INIT_TRANSPARENT_FILE_PATH,
+				OFFSET_TRANSPARENT_FILE_PATH,
 				transition_file_path
 			)
 		else:
-			concat_file_paths = (INIT_TRANSPARENT_FILE_PATH,)
+			concat_file_paths = (OFFSET_TRANSPARENT_FILE_PATH,)
 		# We use "last_i - 1" as the last video is actually a transparent video,
 		# which prevents the last image to "stick" until the end.
 		if not i == 0 and not i == last_i - 1 and not TRANSITIONS_BETWEEN_IMAGES_ANIMATION:
@@ -142,7 +142,7 @@ def create_transitions(transition_file_path, mid_offset, video_file_paths):
 
 
 def generate_offset(duration):
-	tmp_output_file_path = get_temp_file_path(INIT_TRANSPARENT_FILE_PATH)
+	tmp_output_file_path = get_temp_file_path(OFFSET_TRANSPARENT_FILE_PATH)
 	cmd = 'ffmpeg \
 		-y \
 		-i {input_file_path} \
@@ -159,7 +159,7 @@ def generate_offset(duration):
 	subprocess.call(['bash', '-c', cmd])
 
 	generate_silence(duration)
-	add_silence_to_video(tmp_output_file_path, INIT_TRANSPARENT_FILE_PATH)
+	add_silence_to_video(tmp_output_file_path, OFFSET_TRANSPARENT_FILE_PATH)
 
 
 def generate_silence(duration):
@@ -300,7 +300,7 @@ if __name__ == '__main__':
 	video_file_paths = images_to_videos(images)
 
 	if TRANSITIONS_START > 0:
-		concat_file_paths = [INIT_TRANSPARENT_FILE_PATH]
+		concat_file_paths = [OFFSET_TRANSPARENT_FILE_PATH]
 		concat_file_paths.extend(video_file_paths)
 		concat_videos(concat_file_paths, IMAGES_VIDEO_FILE_PATH)
 	else:
