@@ -7,6 +7,24 @@ from PIL import Image
 from shutil import copyfile
 
 
+def add_silence_to_video(input_file_path, output_file_path):
+	cmd = 'ffmpeg \
+		-y \
+		-i {audio_file_path} \
+		-i {video_file_path} \
+		-c:a {audio_codec} \
+		-c:v {video_codec} \
+		-pix_fmt {pixel_fmt} \
+		{output_file_path}'.format(
+			audio_file_path=SILENCE_AUDIO_FILE_PATH,
+			video_file_path=input_file_path,
+			audio_codec=AUDIO_CODEC,
+			video_codec=VIDEO_CODEC,
+			pixel_fmt=PIXEL_FMT,
+			output_file_path=output_file_path)
+	subprocess.call(['bash', '-c', cmd])
+
+
 def concat_videos(video_file_paths, output_file_path):
 	inputs, filters = generate_inputs_and_filters(video_file_paths)
 	cmd = 'ffmpeg \
