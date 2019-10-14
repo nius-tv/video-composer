@@ -14,7 +14,7 @@ def crop_story_video():
 		-c:v {video_codec} \
 		-pix_fmt {pixel_fmt} \
 		{output_file_path}'.format(
-			input_file_path=STORY_VIDEO_FILE_PATH,
+			input_file_path=STORY_VIDEO_WITH_PRESENTER_BG_FILE_PATH,
 			width=VIDEO_SIZE[0] - (BACKGROUND_PADDING * 2),
 			height=VIDEO_SIZE[1] - (BACKGROUND_PADDING * 2),
 			video_codec=VIDEO_CODEC,
