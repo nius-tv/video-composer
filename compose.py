@@ -138,6 +138,7 @@ def generate_inputs_and_filters(video_file_paths):
 
 
 def generate_offset(duration):
+	tmp_output_file_path = get_temp_file_path(INIT_TRANSPARENT_FILE_PATH)
 	cmd = 'ffmpeg \
 		-y \
 		-i {input_file_path} \
@@ -150,7 +151,11 @@ def generate_offset(duration):
 			duration=duration,
 			video_codec=VIDEO_CODEC,
 			pixel_fmt=PIXEL_FMT,
-			output_file_path=INIT_TRANSPARENT_FILE_PATH)
+			output_file_path=tmp_output_file_path)
+	subprocess.call(['bash', '-c', cmd])
+
+	generate_silence(duration)
+	add_silence_to_video(tmp_output_file_path, INIT_TRANSPARENT_FILE_PATH)
 
 
 def generate_silence(duration):
@@ -180,7 +185,14 @@ def get_formulas():
 		)
 
 
+def get_temp_file_path(file_path):
+	filename = file_path.split('/')[-1]
+	filename = 'tmp-{}'.format(filename)
+	return '{}/{}'.format(TMP_DIR_PATH, filename)
+
+
 def image_to_video(image_file_path, output_file_path, duration=IMAGE_DURATION):
+	tmp_output_file_path = get_temp_file_path(output_file_path)
 	image = Image.open(image_file_path)
 	formulas = get_formulas()
 	cmd = 'ffmpeg \
@@ -205,8 +217,12 @@ def image_to_video(image_file_path, output_file_path, duration=IMAGE_DURATION):
 			xy=random.choice(formulas),
 			video_codec=VIDEO_CODEC,
 			pixel_fmt=PIXEL_FMT,
-			output_file_path=output_file_path)
+			output_file_path=tmp_output_file_path)
 	subprocess.call(['bash', '-c', cmd])
+
+	generate_silence(duration)
+	add_silence_to_video(tmp_output_file_path, output_file_path)
+
 
 
 def images_to_videos(images):
