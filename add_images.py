@@ -300,7 +300,7 @@ if __name__ == '__main__':
 	video_file_paths = images_to_videos(images)
 
 	if TRANSITIONS_START > 0:
-		concat_file_paths = [OFFSET_TRANSPARENT_FILE_PATH]
+		concat_file_paths = [OFFSET_VIDEO_FILE_PATH]
 		concat_file_paths.extend(video_file_paths)
 		concat_videos(concat_file_paths, IMAGES_VIDEO_FILE_PATH)
 	else:
