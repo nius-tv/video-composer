@@ -119,7 +119,8 @@ def create_transitions(transition_file_path, mid_offset, video_file_paths):
 			continue
 		if i == last_i - 1 and not TRANSITIONS_END_ANIMATION:
 			continue
-		# Here we break as the last video is a transparent video.
+		# Here we break as the last video is a transparent video 
+		# and it should not have an ending transition.
 		if i == last_i:
 			break
 
