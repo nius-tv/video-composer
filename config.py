@@ -5,6 +5,7 @@ LIBRARY_DIR_PATH = '/library'
 # End of sensitive variables
 AUDIO_CODEC = 'pcm_s16le'
 BACKGROUND_PADDING = 7 # in pixels
+BACKGROUND_VIDEO_FILE_PATH = '{}/backgrounds/30fps-512x1024/49.mov'.format(LIBRARY_DIR_PATH)
 CHROMA_OVERLAY = 0.1
 CHROMA_SENSITIVITY = 0.3
 CROPPED_STORY_VIDEO_FILE_PATH = '{}/cropped-story.mov'.format(TMP_DIR_PATH)
