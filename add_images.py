@@ -16,8 +16,8 @@ def add_silence_to_video(input_file_path, output_file_path):
 		-c:v {video_codec} \
 		-pix_fmt {pixel_fmt} \
 		{output_file_path}'.format(
-			audio_file_path=SILENCE_AUDIO_FILE_PATH,
-			video_file_path=input_file_path,
+			audio_file_path=audio_file_path,
+			video_file_path=video_file_path,
 			audio_codec=AUDIO_CODEC,
 			video_codec=VIDEO_CODEC,
 			pixel_fmt=PIXEL_FMT,
