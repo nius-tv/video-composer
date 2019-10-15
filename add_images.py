@@ -293,7 +293,7 @@ if __name__ == '__main__':
 				   TRANSPARENT_VIDEO_DURATION)
 
 	if TRANSITIONS_START > 0:
-		generate_offset(TRANSITIONS_START)
+		generate_offset_video(TRANSITIONS_START)
 
 	images = story['transitions']['images']
 	images.append(TRANSPARENT_IMAGE_FILE_PATH)
