@@ -7,7 +7,7 @@ from PIL import Image
 from shutil import copyfile
 
 
-def add_silence_to_video(input_file_path, output_file_path):
+def add_audio_to_video(audio_file_path, video_file_path, output_file_path):
 	cmd = 'ffmpeg \
 		-y \
 		-i {audio_file_path} \
@@ -159,8 +159,10 @@ def generate_offset_video(duration):
 			output_file_path=tmp_output_file_path)
 	subprocess.call(['bash', '-c', cmd])
 
-	generate_silence(duration)
-	add_silence_to_video(tmp_output_file_path, OFFSET_TRANSPARENT_FILE_PATH)
+	generate_silence_audio(duration, SILENCE_AUDIO_FILE_PATH)
+	add_audio_to_video(SILENCE_AUDIO_FILE_PATH,
+					   tmp_output_file_path,
+					   OFFSET_VIDEO_FILE_PATH)
 
 
 def generate_silence_audio(duration, output_file_path):
@@ -225,8 +227,10 @@ def image_to_video(image_file_path, output_file_path, duration=IMAGE_DURATION):
 			output_file_path=tmp_output_file_path)
 	subprocess.call(['bash', '-c', cmd])
 
-	generate_silence(duration)
-	add_silence_to_video(tmp_output_file_path, output_file_path)
+	generate_silence_audio(duration, SILENCE_AUDIO_FILE_PATH)
+	add_audio_to_video(SILENCE_AUDIO_FILE_PATH,
+					   tmp_output_file_path,
+					   output_file_path)
 
 
 def images_to_videos(images):
