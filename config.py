@@ -4,6 +4,7 @@ TMP_DIR_PATH = '{}/tmp'.format(ASSETS_DIR_PATH)
 LIBRARY_DIR_PATH = '/library'
 # End of sensitive variables
 AUDIO_CODEC = 'pcm_s16le'
+BACKGROUND_PADDING = 7 # in pixels
 FINAL_VIDEO_FILE_PATH = '{}/video.mov'.format(TMP_DIR_PATH)
 FPS = 30
 IMAGE_ANIMATION_SPEED_Y = 7
