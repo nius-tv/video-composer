@@ -142,7 +142,7 @@ def create_transitions(transition_file_path, mid_offset, video_file_paths):
 	return output_file_paths
 
 
-def generate_offset(duration):
+def generate_offset_video(duration):
 	tmp_output_file_path = get_tmp_file_path(OFFSET_VIDEO_FILE_PATH)
 	cmd = 'ffmpeg \
 		-y \
