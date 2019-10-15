@@ -27,7 +27,7 @@ def add_silence_to_video(input_file_path, output_file_path):
 
 def compute_audio_maps(num_videos):
 	maps = []
-	
+
 	for i in range(num_videos):
 		audio_map = '-map {}:a'.format(i)
 		maps.append(audio_map)
@@ -237,7 +237,8 @@ def images_to_videos(images):
 		else:
 			input_file_path = image_name
 
-		filename = image_name.split('/')[-1].split('.')[0]
+		filename = image_name.split('/')[-1]
+		filename = filename.split('.')[0]
 		output_file_path = '{}/tmp/{}-image.{}'.format(ASSETS_DIR_PATH, filename, VIDEO_FMT)
 		output_file_paths.append(output_file_path)
 
