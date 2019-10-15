@@ -186,7 +186,7 @@ def get_formulas():
 	else:
 		return (
 			'y=t*(in_h-out_h)/{}'.format(IMAGE_ANIMATION_SPEED_Y),
-			'y=(in_h-out_h)-t*(in_h-out_h)/7'.format(IMAGE_ANIMATION_SPEED_Y)
+			'y=(in_h-out_h)-t*(in_h-out_h)/{}'.format(IMAGE_ANIMATION_SPEED_Y)
 		)
 
 
