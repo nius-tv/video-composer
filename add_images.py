@@ -128,7 +128,7 @@ def create_transitions(transition_file_path, mid_offset, video_file_paths):
 		if image_start < 0:
 			continue
 
-		generate_offset(duration=image_start)
+		generate_offset_video(duration=image_start)
 
 		if not video_file_path == tmp_video_file_paths[-1]:
 			filename = video_file_path.split('/')[-1].split('.')[0]
