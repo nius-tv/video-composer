@@ -259,7 +259,6 @@ def load_transitions():
 
 
 def overlay_videos(video_file_paths, output_file_path):
-	assert len(video_file_paths) > 1
 	inputs, filters = compute_inputs_and_filters(video_file_paths, with_audio=False)
 	overlays, last_v_ref = compute_overlays(filters)
 	audio_maps = compute_audio_maps(len(video_file_paths))
