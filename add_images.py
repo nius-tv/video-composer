@@ -163,7 +163,7 @@ def generate_offset(duration):
 	add_silence_to_video(tmp_output_file_path, OFFSET_TRANSPARENT_FILE_PATH)
 
 
-def generate_silence(duration):
+def generate_silence_audio(duration, output_file_path):
 	cmd = 'ffmpeg \
 		-y \
 		-f lavfi \
@@ -173,7 +173,7 @@ def generate_silence(duration):
 		{output_file_path}'.format(
 			duration=duration,
 			audio_codec=AUDIO_CODEC,
-			output_file_path=SILENCE_AUDIO_FILE_PATH)
+			output_file_path=output_file_path)
 	subprocess.call(['bash', '-c', cmd])
 
 
