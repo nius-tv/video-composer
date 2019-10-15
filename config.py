@@ -24,6 +24,7 @@ PRESENTER_BACKGROUND_VIDEO_FILE_PATH = '{}/presenter-bgs/1.mov'.format(LIBRARY_D
 SILENCE_AUDIO_FILE_PATH = '{}/silence.wav'.format(TMP_DIR_PATH)
 STORY_FILE_PATH = 'story.yaml'
 STORY_VIDEO_FILE_PATH = '{}/story.mov'.format(ASSETS_DIR_PATH)
+STORY_VIDEO_WITH_PRESENTER_BG_FILE_PATH = '{}/presenter-bg-story.mov'.format(TMP_DIR_PATH)
 TRANSITION_FILE_PATH = 'transitions.yaml'
 TRANSITION_ID = 0
 TRANSITIONS_BETWEEN_IMAGES_ANIMATION = True
