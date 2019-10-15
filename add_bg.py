@@ -60,7 +60,7 @@ if __name__ == '__main__':
 	duration = get_duration(PADDED_STORY_VIDEO_FILE_PATH)
 	generate_silence_audio(duration, SILENCE_AUDIO_FILE_PATH)
 	add_audio_to_video(SILENCE_AUDIO_FILE_PATH,
-					   BACKGROUND_FILE_PATH,
+					   BACKGROUND_VIDEO_FILE_PATH,
 					   BACKGROUND_WITH_AUDIO_FILE_PATH)
 
 	video_file_paths = (
