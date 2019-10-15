@@ -5,6 +5,7 @@ LIBRARY_DIR_PATH = '/library'
 # End of sensitive variables
 AUDIO_CODEC = 'pcm_s16le'
 BACKGROUND_PADDING = 7 # in pixels
+CHROMA_OVERLAY = 0.1
 FINAL_VIDEO_FILE_PATH = '{}/video.mov'.format(TMP_DIR_PATH)
 FPS = 30
 IMAGE_ANIMATION_SPEED_Y = 7
