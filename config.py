@@ -20,6 +20,7 @@ IMAGES_VIDEO_FILE_PATH = '{}/images.mov'.format(TMP_DIR_PATH)
 OFFSET_VIDEO_FILE_PATH = '{}/offset-transparent.mov'.format(TMP_DIR_PATH)
 PADDED_STORY_VIDEO_FILE_PATH = '{}/padded-story.mov'.format(TMP_DIR_PATH)
 PIXEL_FMT = 'argb'
+PRESENTER_BACKGROUND_VIDEO_FILE_PATH = '{}/presenter-bgs/1.mov'.format(LIBRARY_DIR_PATH)
 SILENCE_AUDIO_FILE_PATH = '{}/silence.wav'.format(TMP_DIR_PATH)
 STORY_FILE_PATH = 'story.yaml'
 TRANSITION_FILE_PATH = 'transitions.yaml'
