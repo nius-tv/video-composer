@@ -7,24 +7,6 @@ from PIL import Image
 from shutil import copyfile
 
 
-def compute_inputs_and_filters(video_file_paths, with_audio=True):
-	inputs = []
-	filters = []
-
-	for i, video_file_path in enumerate(video_file_paths):
-		cmd = '-i {}'.format(video_file_path)
-		inputs.append(cmd)
-
-		if with_audio:
-			cmd = '[{i}:v][{i}:a]'.format(i=i)
-		else:
-			cmd = '[{}:v]'.format(i)
-
-		filters.append(cmd)
-
-	return inputs, filters
-
-
 def compute_overlays(filters):
 	start = 0
 	end = 2
