@@ -1,5 +1,9 @@
 import subprocess
 
+from config import *
+from lib import *
+
+
 def crop_story_video():
 	cmd = 'ffmpeg \
 		-y \
