@@ -20,3 +20,16 @@ def concat_videos(video_file_paths, output_file_path):
 	subprocess.call(['bash', '-c', cmd])
 
 
+def get_formulas():
+	if random.randrange(2) == 0:
+		return (
+			'x=t*(in_w-out_w)/{}'.format(IMAGE_ANIMATION_SPEED_X),
+			'x=(in_w-out_w)-t*(in_w-out_w)/{}'.format(IMAGE_ANIMATION_SPEED_X)
+		)
+	else:
+		return (
+			'y=t*(in_h-out_h)/{}'.format(IMAGE_ANIMATION_SPEED_Y),
+			'y=(in_h-out_h)-t*(in_h-out_h)/{}'.format(IMAGE_ANIMATION_SPEED_Y)
+		)
+
+
