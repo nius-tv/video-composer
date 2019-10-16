@@ -2,7 +2,7 @@
 ASSETS_DIR_PATH = '/assets'
 LIBRARY_DIR_PATH = '/library'
 TMP_DIR_PATH = '{}/tmp'.format(ASSETS_DIR_PATH)
-VIDEO_FMT = '{}'
+VIDEO_FMT = 'mov'
 # End of sensitive variables
 AUDIO_CODEC = 'pcm_s16le'
 BACKGROUND_PADDING = 7 # in pixels
