@@ -174,31 +174,6 @@ def load_transitions():
 	return yaml.load(data, Loader=yaml.FullLoader)
 
 
-def overlay_videos(video_file_paths, output_file_path):
-	inputs, filters = compute_inputs_and_filters(video_file_paths, with_audio=False)
-	overlays, last_v_ref = compute_overlays(filters)
-	audio_maps = compute_audio_maps(len(video_file_paths))
-	cmd = 'ffmpeg \
-		-y \
-		{inputs} \
-		-filter_complex "{overlays}" \
-		{audio_maps} \
-		-map {last_v_ref} \
-		-c:a {audio_codec} \
-		-c:v {video_codec} \
-		-pix_fmt {pixel_fmt} \
-		{output_file_path}'.format(
-			inputs=' '.join(inputs),
-			overlays=';'.join(overlays),
-			audio_maps=' '.join(audio_maps),
-			last_v_ref=last_v_ref,
-			audio_codec=AUDIO_CODEC,
-			video_codec=VIDEO_CODEC,
-			pixel_fmt=PIXEL_FMT,
-			output_file_path=output_file_path)
-	subprocess.call(['bash', '-c', cmd])
-
-
 if __name__ == '__main__':
 	story = load_story()
 	transitions = load_transitions()
