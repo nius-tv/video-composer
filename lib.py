@@ -21,6 +21,24 @@ def add_audio_to_video(audio_file_path, video_file_path, output_file_path):
 	subprocess.call(['bash', '-c', cmd])
 
 
+def compute_inputs_and_filters(video_file_paths, with_audio=True):
+	inputs = []
+	filters = []
+
+	for i, video_file_path in enumerate(video_file_paths):
+		cmd = '-i {}'.format(video_file_path)
+		inputs.append(cmd)
+
+		if with_audio:
+			cmd = '[{i}:v][{i}:a]'.format(i=i)
+		else:
+			cmd = '[{}:v]'.format(i)
+
+		filters.append(cmd)
+
+	return inputs, filters
+
+
 def cut_video(input_file_path, output_file_path, duration):
 	cmd = 'ffmpeg \
 		-y \
