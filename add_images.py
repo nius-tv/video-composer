@@ -33,3 +33,15 @@ def get_formulas():
 		)
 
 
+def load_story():
+	with open(STORY_FILE_PATH) as f:
+		data = f.read()
+	return yaml.load(data, Loader=yaml.FullLoader)
+
+
+def load_transitions():
+	with open(TRANSITION_FILE_PATH) as f:
+		data = f.read()
+	return yaml.load(data, Loader=yaml.FullLoader)
+
+
