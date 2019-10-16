@@ -49,6 +49,30 @@ def compute_inputs_and_filters(video_file_paths, with_audio=True):
 	return inputs, filters
 
 
+def compute_overlays(filters):
+	start = 0
+	end = 2
+	overlays = []
+
+	for i in range(1, len(filters)):
+		v_ref = ''.join(filters[start:end])
+		next_v_ref = '[v{}]'.format(i)
+
+		if i == 1:
+			overlay = '{}overlay{}'.format(v_ref, next_v_ref)
+			overlays.append(overlay)
+			start += 1
+		else:
+			overlay = '{}{}overlay{}'.format(last_v_ref, v_ref, next_v_ref)
+			overlays.append(overlay)
+
+		start += 1
+		end += 1
+		last_v_ref = next_v_ref
+
+	return overlays, last_v_ref
+
+
 def cut_video(input_file_path, output_file_path, duration):
 	cmd = 'ffmpeg \
 		-y \
@@ -84,3 +108,6 @@ def get_tmp_file_path(file_path):
 	filename = file_path.split('/')[-1]
 	filename = 'tmp-{}'.format(filename)
 	return '{}/{}'.format(TMP_DIR_PATH, filename)
+
+
+	inputs, filters = compute_inputs_and_filters(video_file_paths, with_audio=False)
