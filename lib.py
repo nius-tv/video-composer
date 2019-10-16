@@ -38,6 +38,20 @@ def cut_video(input_file_path, output_file_path, duration):
 	subprocess.call(['bash', '-c', cmd])
 
 
+def generate_silence_audio(duration):
+	cmd = 'ffmpeg \
+		-y \
+		-f lavfi \
+		-i anullsrc \
+		-t {duration} \
+		-c:a {audio_codec} \
+		{output_file_path}'.format(
+			duration=duration,
+			audio_codec=AUDIO_CODEC,
+			output_file_path=SILENCE_AUDIO_FILE_PATH)
+	subprocess.call(['bash', '-c', cmd])
+
+
 def get_tmp_file_path(file_path):
 	filename = file_path.split('/')[-1]
 	filename = 'tmp-{}'.format(filename)
