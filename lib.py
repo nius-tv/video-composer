@@ -21,6 +21,16 @@ def add_audio_to_video(audio_file_path, video_file_path, output_file_path):
 	subprocess.call(['bash', '-c', cmd])
 
 
+def compute_audio_maps(num_videos):
+	maps = []
+
+	for i in range(num_videos):
+		audio_map = '-map {}:a'.format(i)
+		maps.append(audio_map)
+
+	return maps
+
+
 def compute_inputs_and_filters(video_file_paths, with_audio=True):
 	inputs = []
 	filters = []
