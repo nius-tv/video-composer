@@ -108,12 +108,6 @@ def get_formulas():
 		)
 
 
-def get_tmp_file_path(file_path):
-	filename = file_path.split('/')[-1]
-	filename = 'tmp-{}'.format(filename)
-	return '{}/{}'.format(TMP_DIR_PATH, filename)
-
-
 def image_to_video(image_file_path, output_file_path, duration=IMAGE_DURATION):
 	tmp_output_file_path = get_tmp_file_path(output_file_path)
 	image = Image.open(image_file_path)
