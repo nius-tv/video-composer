@@ -95,20 +95,6 @@ def generate_offset_video(duration):
 					   OFFSET_VIDEO_FILE_PATH)
 
 
-def generate_silence_audio(duration, output_file_path):
-	cmd = 'ffmpeg \
-		-y \
-		-f lavfi \
-		-i anullsrc \
-		-t {duration} \
-		-c:a {audio_codec} \
-		{output_file_path}'.format(
-			duration=duration,
-			audio_codec=AUDIO_CODEC,
-			output_file_path=output_file_path)
-	subprocess.call(['bash', '-c', cmd])
-
-
 def get_formulas():
 	if random.randrange(2) == 0:
 		return (
