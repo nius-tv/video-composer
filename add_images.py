@@ -52,6 +52,41 @@ def get_formulas():
 		)
 
 
+def image_to_video(image_file_path, output_file_path, duration=IMAGE_DURATION):
+	tmp_output_file_path = get_tmp_file_path(output_file_path)
+	image = Image.open(image_file_path)
+	formulas = get_formulas()
+	cmd = 'ffmpeg \
+		-y \
+		-loop 1 \
+		-i {image_file_path} \
+		-t {duration} \
+		-filter_complex " \
+			fps={fps}, \
+			scale=w={image_width}:h={image_height}, \
+			crop=w={video_width}:h={video_height}:{xy}" \
+		-c:v {video_codec} \
+		-pix_fmt {pixel_fmt} \
+		{output_file_path}'.format(
+			image_file_path=image_file_path,
+			duration=duration,
+			fps=FPS,
+			image_width=image.size[0],
+			image_height=image.size[1],
+			video_width=VIDEO_SIZE[0],
+			video_height=VIDEO_SIZE[1],
+			xy=random.choice(formulas),
+			video_codec=VIDEO_CODEC,
+			pixel_fmt=PIXEL_FMT,
+			output_file_path=tmp_output_file_path)
+	subprocess.call(['bash', '-c', cmd])
+
+	generate_silence_audio(duration)
+	add_audio_to_video(SILENCE_AUDIO_FILE_PATH,
+					   tmp_output_file_path,
+					   output_file_path)
+
+
 def load_story():
 	with open(STORY_FILE_PATH) as f:
 		data = f.read()
