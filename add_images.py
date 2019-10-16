@@ -87,6 +87,25 @@ def image_to_video(image_file_path, output_file_path, duration=IMAGE_DURATION):
 					   output_file_path)
 
 
+def images_to_videos(images):
+	output_file_paths = []
+
+	for i, image_name in enumerate(images):
+		if not image_name == TRANSPARENT_IMAGE_FILE_PATH:
+			input_file_path = '{}/{}'.format(ASSETS_DIR_PATH, image_name)
+		else:
+			input_file_path = image_name
+
+		filename = image_name.split('/')[-1]
+		filename = filename.split('.')[0]
+		output_file_path = '{}/{}-image.{}'.format(TMP_DIR_PATH, filename, VIDEO_FMT)
+		output_file_paths.append(output_file_path)
+
+		image_to_video(input_file_path, output_file_path)
+
+	return output_file_paths
+
+
 def load_story():
 	with open(STORY_FILE_PATH) as f:
 		data = f.read()
