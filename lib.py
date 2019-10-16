@@ -2,6 +2,13 @@ import subprocess
 
 from config import *
 
+
+def get_tmp_file_path(file_path):
+	filename = file_path.split('/')[-1]
+	filename = 'tmp-{}'.format(filename)
+	return '{}/{}'.format(TMP_DIR_PATH, filename)
+
+
 def cut_video(input_file_path, output_file_path, duration):
 	cmd = 'ffmpeg \
 		-y \
