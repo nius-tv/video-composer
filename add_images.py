@@ -1,3 +1,13 @@
+import random
+import subprocess
+import yaml
+
+from config import *
+from lib import *
+from PIL import Image
+from shutil import copyfile
+
+
 def concat_videos(video_file_paths, output_file_path):
 	inputs, filters = compute_inputs_and_filters(video_file_paths)
 	cmd = 'ffmpeg \
