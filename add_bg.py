@@ -55,14 +55,16 @@ def pad_story_video():
 if __name__ == '__main__':
 	crop_story_video()
 	pad_story_video()
-	# Add audio to background
+	# Generate audio for background
 	duration = get_duration(PADDED_STORY_VIDEO_FILE_PATH)
 	generate_silence_audio(duration)
-	tmp_file_path = get_tmp_file_path(BACKGROUND_WITH_AUDIO_FILE_PATH)
+	# Cut background to match audio duration
+	tmp_bg_file_path = get_tmp_file_path(BACKGROUND_VIDEO_FILE_PATH)
+	cut_video(BACKGROUND_VIDEO_FILE_PATH, tmp_bg_file_path, duration)
+	# Add audio to background
 	add_audio_to_video(SILENCE_AUDIO_FILE_PATH,
-					   BACKGROUND_VIDEO_FILE_PATH,
-					   tmp_file_path)
-	cut_video(tmp_file_path, BACKGROUND_WITH_AUDIO_FILE_PATH, duration)
+					   tmp_bg_file_path,
+					   BACKGROUND_WITH_AUDIO_FILE_PATH)
 	# Merge background with story
 	video_file_paths = (
 		BACKGROUND_WITH_AUDIO_FILE_PATH,
