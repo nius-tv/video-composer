@@ -30,6 +30,15 @@ def concat_videos(video_file_paths, output_file_path):
 	subprocess.call(['bash', '-c', cmd])
 
 
+def generate_offset_video(duration):
+	tmp_output_file_path = get_tmp_file_path(OFFSET_VIDEO_FILE_PATH)
+	cut_video(TRANSPARENT_VIDEO_FILE_PATH, tmp_output_file_path, duration)
+	generate_silence_audio(duration)
+	add_audio_to_video(SILENCE_AUDIO_FILE_PATH,
+					   tmp_output_file_path,
+					   OFFSET_VIDEO_FILE_PATH)
+
+
 def get_formulas():
 	if random.randrange(2) == 0:
 		return (
