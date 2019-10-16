@@ -7,16 +7,6 @@ from PIL import Image
 from shutil import copyfile
 
 
-def compute_audio_maps(num_videos):
-	maps = []
-
-	for i in range(num_videos):
-		audio_map = '-map {}:a'.format(i)
-		maps.append(audio_map)
-
-	return maps
-
-
 def compute_inputs_and_filters(video_file_paths, with_audio=True):
 	inputs = []
 	filters = []
