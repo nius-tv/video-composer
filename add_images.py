@@ -183,7 +183,6 @@ if __name__ == '__main__':
 											   video_file_paths)
 	# Combine transitions into one
 	num_transitions = len(transition_file_paths)
-	
 	if num_transitions > 1:
 		overlay_videos(transition_file_paths, TRANSITIONS_FILE_PATH)
 	elif num_transitions == 1:
@@ -197,7 +196,7 @@ if __name__ == '__main__':
 		overlay_videos(video_file_paths, IMAGES_TRANSITIONS_FILE_PATH)
 	else:
 		copyfile(IMAGES_VIDEO_FILE_PATH, IMAGES_TRANSITIONS_FILE_PATH)
-
+	# Combine images with transition with story video
 	video_file_paths = (
 		STORY_WITH_BACKGROUND_VIDEO_FILE_PATH,
 		IMAGES_TRANSITIONS_FILE_PATH
