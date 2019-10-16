@@ -56,7 +56,7 @@ def create_transitions(transition_file_path, mid_offset, video_file_paths):
 
 		filename = video_file_path.split('/')[-1]
 		filename = filename.split('.')[0]
-		output_file_path = '{}/{}-transition.mov'.format(TMP_DIR_PATH, filename)
+		output_file_path = '{}/{}-transition.{}'.format(TMP_DIR_PATH, filename, VIDEO_FMT)
 		output_file_paths.append(output_file_path)
 
 		concat_videos(concat_file_paths, output_file_path)
