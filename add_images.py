@@ -7,30 +7,6 @@ from PIL import Image
 from shutil import copyfile
 
 
-def compute_overlays(filters):
-	start = 0
-	end = 2
-	overlays = []
-
-	for i in range(1, len(filters)):
-		v_ref = ''.join(filters[start:end])
-		next_v_ref = '[v{}]'.format(i)
-
-		if i == 1:
-			overlay = '{}overlay{}'.format(v_ref, next_v_ref)
-			overlays.append(overlay)
-			start += 1
-		else:
-			overlay = '{}{}overlay{}'.format(last_v_ref, v_ref, next_v_ref)
-			overlays.append(overlay)
-
-		start += 1
-		end += 1
-		last_v_ref = next_v_ref
-
-	return overlays, last_v_ref
-
-
 def concat_videos(video_file_paths, output_file_path):
 	inputs, filters = compute_inputs_and_filters(video_file_paths)
 	cmd = 'ffmpeg \
