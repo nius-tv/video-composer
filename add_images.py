@@ -30,6 +30,40 @@ def concat_videos(video_file_paths, output_file_path):
 	subprocess.call(['bash', '-c', cmd])
 
 
+def create_transitions(transition_file_path, mid_offset, video_file_paths):
+	output_file_paths = []
+	last_i = len(video_file_paths)
+
+	for i, video_file_path in enumerate(video_file_paths):
+		if not i == 0 and not i == last_i and not TRANSITIONS_BETWEEN_IMAGES_ANIMATION:
+			continue
+		if i == last_i and not TRANSITIONS_END_ANIMATION:
+			continue
+
+		image_start = float(TRANSITIONS_START) - float(mid_offset) + float(IMAGE_DURATION * i)
+		if image_start < 0:
+			continue
+
+		generate_offset_video(duration=image_start)
+
+		if not i == 0 or TRANSITIONS_START_ANIMATION:
+			concat_file_paths = (
+				OFFSET_VIDEO_FILE_PATH,
+				transition_file_path
+			)
+		else:
+			concat_file_paths = (OFFSET_VIDEO_FILE_PATH,)
+
+		filename = video_file_path.split('/')[-1]
+		filename = filename.split('.')[0]
+		output_file_path = '{}/{}-transition.mov'.format(TMP_DIR_PATH, filename)
+		output_file_paths.append(output_file_path)
+
+		concat_videos(concat_file_paths, output_file_path)
+
+	return output_file_paths
+
+
 def generate_offset_video(duration):
 	tmp_output_file_path = get_tmp_file_path(OFFSET_VIDEO_FILE_PATH)
 	cut_video(TRANSPARENT_VIDEO_FILE_PATH, tmp_output_file_path, duration)
@@ -118,3 +152,54 @@ def load_transitions():
 	return yaml.load(data, Loader=yaml.FullLoader)
 
 
+if __name__ == '__main__':
+	story = load_story()
+	transitions = load_transitions()
+	# Generate initial transparent video
+	if TRANSITIONS_START > 0:
+		image_to_video(TRANSPARENT_IMAGE_FILE_PATH,
+					   TRANSPARENT_VIDEO_FILE_PATH,
+					   TRANSPARENT_VIDEO_DURATION)
+		# Generate offset video with audio from transparent video
+		generate_offset_video(TRANSITIONS_START)
+	# Generate videos from story images
+	images = story['images']
+	images.append(TRANSPARENT_IMAGE_FILE_PATH) # avoid last image from "sticking"
+	video_file_paths = images_to_videos(images)
+
+	if TRANSITIONS_START > 0:
+		concat_file_paths = [OFFSET_VIDEO_FILE_PATH]
+		concat_file_paths.extend(video_file_paths)
+		concat_videos(concat_file_paths, IMAGES_VIDEO_FILE_PATH)
+	else:
+		concat_videos(video_file_paths, IMAGES_VIDEO_FILE_PATH)
+	# Generate transitions
+	default_transition = transitions[TRANSITION_ID]
+	animation_filename = default_transition['name']
+	animation_file_path = '{}/{}'.format(TRANSITIONS_LIBRARY_DIR_PATH, animation_filename)
+	mid_offset = default_transition['mid']
+	transition_file_paths = create_transitions(animation_file_path,
+											   mid_offset,
+											   video_file_paths)
+	# Combine transitions into one
+	num_transitions = len(transition_file_paths)
+	
+	if num_transitions > 1:
+		overlay_videos(transition_file_paths, TRANSITIONS_FILE_PATH)
+	elif num_transitions == 1:
+		copyfile(transition_file_paths[0], TRANSITIONS_FILE_PATH)
+	# Combine images with transitions
+	if num_transitions > 0:
+		video_file_paths = (
+			IMAGES_VIDEO_FILE_PATH,
+			TRANSITIONS_FILE_PATH
+		)
+		overlay_videos(video_file_paths, IMAGES_TRANSITIONS_FILE_PATH)
+	else:
+		copyfile(IMAGES_VIDEO_FILE_PATH, IMAGES_TRANSITIONS_FILE_PATH)
+
+	video_file_paths = (
+		STORY_WITH_BACKGROUND_VIDEO_FILE_PATH,
+		IMAGES_TRANSITIONS_FILE_PATH
+	)
+	overlay_videos(video_file_paths, FINAL_VIDEO_FILE_PATH)
