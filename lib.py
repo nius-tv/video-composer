@@ -1,5 +1,6 @@
 import subprocess
 
+from config import *
 
 def cut_video(input_file_path, output_file_path, duration):
 	cmd = 'ffmpeg \
