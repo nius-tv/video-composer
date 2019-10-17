@@ -1,7 +1,7 @@
 # Warning: the position of these variables is sensitive
-ASSETS_DIR_PATH = '/assets'
+ASSETS_DIR_PATH = '/data'
 LIBRARY_DIR_PATH = '/library'
-TMP_DIR_PATH = '{}/tmp'.format(ASSETS_DIR_PATH)
+TMP_DIR_PATH = '{}/composer'.format(ASSETS_DIR_PATH)
 VIDEO_FMT = 'mov'
 # End of sensitive variables
 AUDIO_CODEC = 'pcm_s16le'
