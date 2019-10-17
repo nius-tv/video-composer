@@ -107,7 +107,7 @@ def generate_silence_audio(duration):
 def get_tmp_file_path(file_path):
 	filename = file_path.split('/')[-1]
 	filename = 'tmp-{}'.format(filename)
-	return '{}/{}'.format(TMP_DIR_PATH, filename)
+	return '{}/{}'.format(ASSETS_DIR_PATH, filename)
 
 
 def overlay_videos(video_file_paths, output_file_path):

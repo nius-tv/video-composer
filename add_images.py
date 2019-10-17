@@ -56,7 +56,7 @@ def create_transitions(transition_file_path, mid_offset, video_file_paths):
 
 		filename = video_file_path.split('/')[-1]
 		filename = filename.split('.')[0]
-		output_file_path = '{}/{}-transition.{}'.format(TMP_DIR_PATH, filename, VIDEO_FMT)
+		output_file_path = '{}/{}-transition.{}'.format(ASSETS_DIR_PATH, filename, VIDEO_FMT)
 		output_file_paths.append(output_file_path)
 
 		concat_videos(concat_file_paths, output_file_path)
@@ -132,7 +132,7 @@ def images_to_videos(images):
 
 		filename = image_name.split('/')[-1]
 		filename = filename.split('.')[0]
-		output_file_path = '{}/{}-image.{}'.format(TMP_DIR_PATH, filename, VIDEO_FMT)
+		output_file_path = '{}/{}-image.{}'.format(ASSETS_DIR_PATH, filename, VIDEO_FMT)
 		output_file_paths.append(output_file_path)
 
 		image_to_video(input_file_path, output_file_path)
