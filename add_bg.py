@@ -1,7 +1,7 @@
 import subprocess
 
 from config import *
-from lib import *
+from utils import *
 
 
 def crop_story_video():

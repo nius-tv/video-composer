@@ -3,9 +3,9 @@ import subprocess
 import yaml
 
 from config import *
-from lib import *
 from PIL import Image
 from shutil import copyfile
+from utils import *
 
 
 def concat_videos(video_file_paths, output_file_path):
