@@ -155,6 +155,9 @@ def load_transitions():
 if __name__ == '__main__':
 	story = load_story()
 	transitions = load_transitions()
+	# Create transparent image
+	img = Image.new('RGBA', VIDEO_SIZE, (0, 0, 0, 0))
+	img.save(TRANSPARENT_IMAGE_FILE_PATH)
 	# Generate initial transparent video
 	if TRANSITIONS_START > 0:
 		image_to_video(TRANSPARENT_IMAGE_FILE_PATH,
