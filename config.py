@@ -1,4 +1,5 @@
 # Warning: the position of these variables is sensitive
+AUDIO_FMT = 'wav'
 IMG_FMT = 'png'
 LIBRARY_DIR_PATH = '/library'
 STORY_DIR_PATH = '/data'
@@ -22,7 +23,7 @@ OFFSET_VIDEO_FILE_PATH = '{}/offset.{}'.format(STORY_DIR_PATH, VIDEO_FMT)
 PADDED_STORY_VIDEO_FILE_PATH = '{}/padded-story.{}'.format(STORY_DIR_PATH, VIDEO_FMT)
 PIXEL_FMT = 'argb'
 PRESENTER_BACKGROUND_VIDEO_FILE_PATH = '{}/presenter-bgs/1.{}'.format(LIBRARY_DIR_PATH, VIDEO_FMT)
-SILENCE_AUDIO_FILE_PATH = '{}/silence.wav'.format(STORY_DIR_PATH)
+SILENCE_AUDIO_FILE_PATH = '{}/silence.{}'.format(STORY_DIR_PATH, AUDIO_FMT)
 STORY_FILE_PATH = '{}/story.yaml'.format(STORY_DIR_PATH)
 STORY_VIDEO_FILE_PATH = '{}/story.{}'.format(STORY_DIR_PATH, VIDEO_FMT)
 STORY_VIDEO_WITH_PRESENTER_BG_FILE_PATH = '{}/presenter-bg-story.{}'.format(STORY_DIR_PATH, VIDEO_FMT)
