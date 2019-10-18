@@ -1,4 +1,5 @@
 # Warning: the position of these variables is sensitive
+IMG_FMT = 'png'
 LIBRARY_DIR_PATH = '/library'
 STORY_DIR_PATH = '/data'
 VIDEO_FMT = 'mov'
@@ -34,7 +35,7 @@ TRANSITIONS_FILE_PATH = '{}/transitions.{}'.format(STORY_DIR_PATH, VIDEO_FMT)
 TRANSITIONS_LIBRARY_DIR_PATH = '{}/transitions/30fps-512x1024'.format(LIBRARY_DIR_PATH)
 TRANSITIONS_START = 1 # in seconds
 TRANSITIONS_START_ANIMATION = True
-TRANSPARENT_IMAGE_FILE_PATH = '{}/transparent.png'.format(LIBRARY_DIR_PATH)
+TRANSPARENT_IMAGE_FILE_PATH = '{}/transparent.{}'.format(LIBRARY_DIR_PATH, IMG_FMT)
 TRANSPARENT_VIDEO_DURATION = 30
 TRANSPARENT_VIDEO_FILE_PATH = '{}/transparent.{}'.format(STORY_DIR_PATH, VIDEO_FMT)
 VIDEO_CODEC = 'qtrle'
