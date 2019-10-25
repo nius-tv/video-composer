@@ -204,4 +204,4 @@ if __name__ == '__main__':
 		STORY_WITH_BACKGROUND_VIDEO_FILE_PATH,
 		IMAGES_TRANSITIONS_FILE_PATH
 	)
-	overlay_videos(video_file_paths, FINAL_VIDEO_FILE_PATH)
+	overlay_videos(video_file_paths, COMPOSED_VIDEO_FILE_PATH)
