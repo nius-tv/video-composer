@@ -22,17 +22,6 @@ def crop_story_video():
 	subprocess.call(['bash', '-c', cmd])
 
 
-def get_duration(input_file_path):
-	# -sexagesimal outputs HOURS:MM:SS.MICROSECONDS time unit format
-	cmd = 'ffprobe \
-		-sexagesimal \
-		-show_entries format=duration \
-		-of default=noprint_wrappers=1:nokey=1 \
-		{}'.format(input_file_path)
-	data = subprocess.check_output(['bash', '-c', cmd])
-	return data.decode('utf-8').strip() # binary to utf-8 string, removes \n
-
-	
 def pad_story_video():
 	# @0 = opacity 0
 	cmd = 'ffmpeg \
