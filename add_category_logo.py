@@ -12,4 +12,4 @@ if __name__ == '__main__':
 		COMPOSED_VIDEO_FILE_PATH,
 		CATEGORY_WITH_AUDIO_VIDEO_FILE_PATH
 	)
-	overlay_videos(video_file_paths, FINAL_VIDEO_FILE_PATH)
+	overlay_videos(video_file_paths, STORY_VIDEO_WITH_CATEGORY_FILE_PATH)
