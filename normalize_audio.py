@@ -23,7 +23,6 @@ def compute_audio_maps(indexes):
 				audio_codec=AUDIO_CODEC,
 				sample_rate=AUDIO_SAMPLE_RATE,
 				file_path=file_path)
-
 		maps.append(cmd)
 
 	return file_paths, maps
@@ -79,7 +78,7 @@ def merge_audio_and_video():
 		-pix_fmt {pixel_fmt} \
 		{output_file_path}'.format(
 			audio_file_path=AUDIO_TRACKS_FILE_PATH,
-			video_file_path=STORY_VIDEO_WITH_CATEGORY_NO_AUDIO_FILE_PATH,
+			video_file_path=NORMALIZED_STORY_VIDEO_NO_AUDIO_FILE_PATH,
 			audio_codec=AUDIO_CODEC,
 			video_codec=VIDEO_CODEC,
 			pixel_fmt=PIXEL_FMT,
