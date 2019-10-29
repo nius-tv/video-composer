@@ -40,7 +40,7 @@ def extract_audio_and_video(audio_maps):
 			input_file_path=STORY_VIDEO_WITH_CATEGORY_FILE_PATH,
 			video_codec=VIDEO_CODEC,
 			pixel_fmt=PIXEL_FMT,
-			output_file_path=STORY_VIDEO_WITH_CATEGORY_NO_AUDIO_FILE_PATH)
+			output_file_path=NORMALIZED_STORY_VIDEO_NO_AUDIO_FILE_PATH)
 	tmp_audio_maps = ' '.join(audio_maps)
 	cmd = '{} {}'.format(cmd, tmp_audio_maps)
 	subprocess.call(['bash', '-c', cmd])
