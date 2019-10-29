@@ -62,12 +62,6 @@ def get_audio_indexes():
 	return ids
 
 
-def merge_audios(file_paths):
-	tmp_file_paths = ' '.join(file_paths)
-	cmd = 'sox -m {} {}'.format(tmp_file_paths, AUDIO_TRACKS_FILE_PATH)
-	subprocess.call(['bash', '-c', cmd])
-
-
 def merge_audio_and_video():
 	cmd = 'ffmpeg \
 		-y \
@@ -83,6 +77,12 @@ def merge_audio_and_video():
 			video_codec=VIDEO_CODEC,
 			pixel_fmt=PIXEL_FMT,
 			output_file_path=NORMALIZED_STORY_VIDEO_FILE_PATH)
+	subprocess.call(['bash', '-c', cmd])
+
+
+def merge_audios(file_paths):
+	tmp_file_paths = ' '.join(file_paths)
+	cmd = 'sox -m {} {}'.format(tmp_file_paths, AUDIO_TRACKS_FILE_PATH)
 	subprocess.call(['bash', '-c', cmd])
 
 
