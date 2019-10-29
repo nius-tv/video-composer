@@ -28,7 +28,7 @@ def compute_audio_maps(indexes):
 	return file_paths, maps
 
 
-def extract_audio_and_video(audio_maps):
+def extract_audios_and_video(audio_maps):
 	cmd = 'ffmpeg \
 		-y \
 		-i {input_file_path} \
@@ -89,6 +89,6 @@ def merge_audio_and_video():
 if __name__ == '__main__':
 	indexes = get_audio_indexes()
 	audio_file_paths, audio_maps = compute_audio_maps(indexes)
-	extract_audio_and_video(audio_maps)
+	extract_audios_and_video(audio_maps)
 	merge_audios(audio_file_paths)
 	merge_audio_and_video()
