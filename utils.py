@@ -106,9 +106,8 @@ def generate_silence_audio(duration):
 
 
 def get_duration(input_file_path):
-	# -sexagesimal outputs HOURS:MM:SS.MICROSECONDS time unit format
 	cmd = 'ffprobe \
-		-sexagesimal \
+		-loglevel quiet \
 		-show_entries format=duration \
 		-of default=noprint_wrappers=1:nokey=1 \
 		{}'.format(input_file_path)
