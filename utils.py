@@ -112,7 +112,8 @@ def get_duration(input_file_path):
 		-of default=noprint_wrappers=1:nokey=1 \
 		{}'.format(input_file_path)
 	data = subprocess.check_output(['bash', '-c', cmd])
-	return data.decode('utf-8').strip() # binary to utf-8 string, removes \n
+	data = data.decode('utf-8').strip() # binary to utf-8 string, removes \n
+	return float(data)
 
 
 def get_tmp_file_path(file_path):
