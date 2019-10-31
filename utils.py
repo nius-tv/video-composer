@@ -1,4 +1,5 @@
 import subprocess
+import yaml
 
 from config import *
 
@@ -119,6 +120,12 @@ def get_tmp_file_path(file_path):
 	filename = file_path.split('/')[-1]
 	filename = 'tmp-{}'.format(filename)
 	return '{}/{}'.format(STORY_DIR_PATH, filename)
+
+
+def load_story():
+	with open(STORY_FILE_PATH) as f:
+		data = f.read()
+	return yaml.load(data, Loader=yaml.FullLoader)
 
 
 def overlay_videos(video_file_paths, output_file_path):
