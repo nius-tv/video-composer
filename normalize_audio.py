@@ -81,8 +81,9 @@ def merge_audio_and_video():
 
 
 def merge_audios(file_paths):
-	tmp_file_paths = ' '.join(file_paths)
-	cmd = 'sox -m {} {}'.format(tmp_file_paths, AUDIO_TRACKS_FILE_PATH)
+	# -v 1: sets volume to 100%
+	tmp_file_paths = ' -v 1 '.join(file_paths)
+	cmd = 'sox -m -v 1 {} {}'.format(tmp_file_paths, AUDIO_TRACKS_FILE_PATH)
 	subprocess.call(['bash', '-c', cmd])
 
 
