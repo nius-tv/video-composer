@@ -163,6 +163,8 @@ if __name__ == '__main__':
 	# Generate videos from story images
 	num_images = story['transitions']['numImages']
 	images = story['images'][0:num_images]
+	assert num_images == len(images)
+
 	images.append(TRANSPARENT_IMAGE_FILE_PATH) # avoid last image from "sticking"
 	video_file_paths = images_to_videos(images)
 
