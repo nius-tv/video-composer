@@ -151,3 +151,8 @@ def overlay_videos(video_file_paths, output_file_path):
 			pixel_fmt=PIXEL_FMT,
 			output_file_path=output_file_path)
 	subprocess.call(['bash', '-c', cmd])
+
+
+def save_story(data):
+	with open(STORY_FILE_PATH, 'w') as f:
+		yaml.dump(data, f, default_flow_style=False)
