@@ -28,7 +28,7 @@ if __name__ == '__main__':
 	else:
 		start = random.randrange(TRANSITIONS_MIN_START)
 		max_num_images = math.floor((duration - TRANSITIONS_MIN_START - TRANSITIONS_MIN_END) / float(IMAGE_DURATION))
-		num_images = random.randrange(1, max_num_images)
+		num_images = random.randrange(MIN_NUM_OF_IMAGES, max_num_images)
 
 	story['transitions'] = {
 		'start': start,
