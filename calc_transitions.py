@@ -12,7 +12,7 @@ if __name__ == '__main__':
 
 	from_sec = float(oov_frames_keys[0]) / FPS
 	last_key = oov_frames_keys[-1]
-	to_sec = float(oov_frames_keys[last_key]) / FPS
+	to_sec = float(oov_frames[last_key]) / FPS
 
 	start = 0
 	if from_sec > TRANSITIONS_MIN_START:
