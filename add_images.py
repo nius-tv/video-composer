@@ -40,7 +40,7 @@ def create_transitions(transition_file_path, mid_offset, video_file_paths):
 		if i == last_i and not TRANSITIONS_END_ANIMATION:
 			continue
 
-		image_start = float(TRANSITIONS_START) - float(mid_offset) + float(IMAGE_DURATION * i)
+		image_start = float(transitions_start) - float(mid_offset) + float(IMAGE_DURATION * i)
 		if image_start < 0:
 			continue
 
@@ -153,18 +153,20 @@ if __name__ == '__main__':
 	img = Image.new('RGBA', VIDEO_SIZE, (0, 0, 0, 0))
 	img.save(TRANSPARENT_IMAGE_FILE_PATH)
 	# Generate initial transparent video
-	if TRANSITIONS_START > 0:
+	transitions_start = story['transitions']['start']
+	if transitions_start > 0:
 		image_to_video(TRANSPARENT_IMAGE_FILE_PATH,
 					   TRANSPARENT_VIDEO_FILE_PATH,
 					   TRANSPARENT_VIDEO_DURATION)
 		# Generate offset video with audio from transparent video
-		generate_offset_video(TRANSITIONS_START)
+		generate_offset_video(transitions_start)
 	# Generate videos from story images
-	images = story['images']
+	num_images = story['transitions']['numImages']
+	images = story['images'][0:num_images]
 	images.append(TRANSPARENT_IMAGE_FILE_PATH) # avoid last image from "sticking"
 	video_file_paths = images_to_videos(images)
 
-	if TRANSITIONS_START > 0:
+	if transitions_start > 0:
 		concat_file_paths = [OFFSET_VIDEO_FILE_PATH]
 		concat_file_paths.extend(video_file_paths)
 		concat_videos(concat_file_paths, IMAGES_VIDEO_FILE_PATH)
