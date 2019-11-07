@@ -2,6 +2,7 @@ import json
 import subprocess
 
 from config import *
+from utils import *
 
 
 def compute_audio_maps(indexes):
