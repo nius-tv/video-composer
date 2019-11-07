@@ -125,16 +125,12 @@ def images_to_videos(images):
 	output_file_paths = []
 
 	for i, image_name in enumerate(images):
-		if not image_name == TRANSPARENT_IMAGE_FILE_PATH:
-			input_file_path = '{}/{}'.format(STORY_DIR_PATH, image_name)
-		else:
-			input_file_path = image_name
-
 		filename = image_name.split('/')[-1]
 		filename = filename.split('.')[0]
 		output_file_path = '{}/{}-image.{}'.format(STORY_DIR_PATH, filename, VIDEO_FMT)
 		output_file_paths.append(output_file_path)
 
+		input_file_path = '{}/{}'.format(STORY_DIR_PATH, image_name)
 		image_to_video(input_file_path, output_file_path)
 
 	return output_file_paths
@@ -164,8 +160,6 @@ if __name__ == '__main__':
 	num_images = story['transitions']['numImages']
 	images = story['images'][0:num_images]
 	assert num_images == len(images)
-
-	images.append(TRANSPARENT_IMAGE_FILE_PATH) # avoid last image from "sticking"
 	video_file_paths = images_to_videos(images)
 
 	if transitions_start > 0:
@@ -188,6 +182,21 @@ if __name__ == '__main__':
 		overlay_videos(transition_file_paths, TRANSITIONS_FILE_PATH)
 	elif num_transitions == 1:
 		copyfile(transition_file_paths[0], TRANSITIONS_FILE_PATH)
+	# Check story duration against images video
+	duration_story = get_duration(STORY_WITH_BACKGROUND_VIDEO_FILE_PATH)
+	duration_images = get_duration(IMAGES_VIDEO_FILE_PATH)
+
+	if duration_story > duration_images:
+			# Copy images video to tmp file
+			tmp_file_path = get_tmp_file_path(IMAGES_VIDEO_FILE_PATH)
+			copyfile(IMAGES_VIDEO_FILE_PATH, tmp_file_path)
+			# Add transparent video to prevent the last image from "sticking"
+			generate_offset_video(duration_story - duration_images)
+			video_file_paths = [
+				tmp_file_path,
+				OFFSET_VIDEO_FILE_PATH
+			]
+			concat_videos(video_file_paths, IMAGES_VIDEO_FILE_PATH)
 	# Combine images with transitions
 	if num_transitions > 0:
 		video_file_paths = (
