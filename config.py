@@ -5,9 +5,9 @@ AUDIO_FMT = os.environ.get('AUDIO_FMT')
 IMG_FMT = os.environ.get('IMG_FMT')
 LIBRARY_DIR_PATH = '/library'
 STORY_DIR_PATH = '/data'
-# End of sensitive variables
-AUDIO_CODEC = 'pcm_s16le'
 VIDEO_FMT = os.environ.get('VIDEO_FMT')
+# End of sensitive variables.
+AUDIO_CODEC = os.environ.get('AUDIO_CODEC')
 AUDIO_SAMPLE_RATE = 44100
 AUDIO_TRACKS_FILE_PATH = '{}/audio-tracks.{}'.format(STORY_DIR_PATH, AUDIO_FMT)
 BACKGROUND_PADDING = 5 # in pixels
