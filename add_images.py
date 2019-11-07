@@ -153,12 +153,12 @@ if __name__ == '__main__':
 	img = Image.new('RGBA', VIDEO_SIZE, (0, 0, 0, 0))
 	img.save(TRANSPARENT_IMAGE_FILE_PATH)
 	# Generate initial transparent video
+	image_to_video(TRANSPARENT_IMAGE_FILE_PATH,
+				   TRANSPARENT_VIDEO_FILE_PATH,
+				   TRANSPARENT_VIDEO_DURATION)
+	# Generate offset video with audio from transparent video
 	transitions_start = story['transitions']['start']
 	if transitions_start > 0:
-		image_to_video(TRANSPARENT_IMAGE_FILE_PATH,
-					   TRANSPARENT_VIDEO_FILE_PATH,
-					   TRANSPARENT_VIDEO_DURATION)
-		# Generate offset video with audio from transparent video
 		generate_offset_video(transitions_start)
 	# Generate videos from story images
 	num_images = story['transitions']['numImages']
