@@ -1,6 +1,8 @@
-# Warning: the position of these variables is sensitive
-AUDIO_FMT = 'wav'
 IMG_FMT = 'png'
+import os
+# Warning: the position of these variables is sensitive.
+# Keep them on top.
+AUDIO_FMT = os.environ.get('AUDIO_FMT')
 LIBRARY_DIR_PATH = '/library'
 STORY_DIR_PATH = '/data'
 VIDEO_FMT = 'mov'
