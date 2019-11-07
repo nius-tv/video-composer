@@ -2,13 +2,13 @@ import os
 # Warning: the position of these variables is sensitive.
 # Keep them on top.
 AUDIO_FMT = os.environ.get('AUDIO_FMT')
+AUDIO_SAMPLE_RATE = 44100
 IMG_FMT = os.environ.get('IMG_FMT')
 LIBRARY_DIR_PATH = '/library'
 STORY_DIR_PATH = '/data'
 VIDEO_FMT = os.environ.get('VIDEO_FMT')
 # End of sensitive variables.
 AUDIO_CODEC = os.environ.get('AUDIO_CODEC')
-AUDIO_SAMPLE_RATE = 44100
 AUDIO_TRACKS_FILE_PATH = '{}/audio-tracks.{}'.format(STORY_DIR_PATH, AUDIO_FMT)
 BACKGROUND_PADDING = 12 # in pixels
 BACKGROUND_VIDEO_FILE_PATH = '{}/backgrounds/30fps-512x1024/15.{}'.format(LIBRARY_DIR_PATH, VIDEO_FMT)
@@ -28,7 +28,7 @@ IMAGE_DURATION = 7
 IMAGES_TRANSITIONS_FILE_PATH = '{}/images-transitions.{}'.format(STORY_DIR_PATH, VIDEO_FMT)
 IMAGES_VIDEO_FILE_PATH = '{}/images.{}'.format(STORY_DIR_PATH, VIDEO_FMT)
 MIN_NUM_OF_IMAGES = 2
-MUSIC_FILE_PATH = '{}/music/1.{}'.format(LIBRARY_DIR_PATH, AUDIO_FMT)
+MUSIC_FILE_PATH = '{}/music/sr{}/1.{}'.format(LIBRARY_DIR_PATH, AUDIO_SAMPLE_RATE, AUDIO_FMT)
 NORMALIZED_STORY_VIDEO_FILE_PATH = '{}/normalized-story.{}'.format(STORY_DIR_PATH, VIDEO_FMT)
 NORMALIZED_STORY_VIDEO_NO_AUDIO_FILE_PATH = '{}/normalized-story-no-audio.{}'.format(STORY_DIR_PATH, VIDEO_FMT)
 OFFSET_VIDEO_FILE_PATH = '{}/offset.{}'.format(STORY_DIR_PATH, VIDEO_FMT)
