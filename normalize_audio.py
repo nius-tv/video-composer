@@ -80,10 +80,17 @@ def merge_audio_and_video():
 	subprocess.call(['bash', '-c', cmd])
 
 
-def merge_audios(file_paths):
+def merge_audios(file_paths, duration):
 	# -v 1: sets volume to 100%
 	tmp_file_paths = ' -v 1 '.join(file_paths)
-	cmd = 'sox -m -v 1 {} {}'.format(tmp_file_paths, AUDIO_TRACKS_FILE_PATH)
+	cmd = 'sox \
+			-m \
+			-v 1 {inputs} \
+			{output_file_path} \
+			trim 0 {duration}'.format(
+		inputs=tmp_file_paths,
+		output_file_path=AUDIO_TRACKS_FILE_PATH,
+		duration=duration)
 	subprocess.call(['bash', '-c', cmd])
 
 
@@ -91,6 +98,7 @@ if __name__ == '__main__':
 	indexes = get_audio_indexes()
 	audio_file_paths, audio_maps = compute_audio_maps(indexes)
 	extract_audios_and_video(audio_maps)
+	duration = get_duration(STORY_VIDEO_WITH_DYNAMIC_OVERLAY_FILE_PATH)
 	audio_file_paths.append(MUSIC_FILE_PATH)
-	merge_audios(audio_file_paths)
+	merge_audios(audio_file_paths, duration)
 	merge_audio_and_video()
