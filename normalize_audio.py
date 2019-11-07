@@ -36,7 +36,7 @@ def extract_audios_and_video(audio_maps):
 		-c:v {video_codec} \
 		-pix_fmt {pixel_fmt} \
 		{output_file_path}'.format(
-			input_file_path=STORY_VIDEO_WITH_MUSIC_FILE_PATH,
+			input_file_path=STORY_VIDEO_WITH_DYNAMIC_OVERLAY_FILE_PATH,
 			video_codec=VIDEO_CODEC,
 			pixel_fmt=PIXEL_FMT,
 			output_file_path=NORMALIZED_STORY_VIDEO_NO_AUDIO_FILE_PATH)
@@ -51,7 +51,7 @@ def get_audio_indexes():
 		-select_streams a \
 		-show_entries stream \
 		-print_format json \
-		{}'.format(STORY_VIDEO_WITH_MUSIC_FILE_PATH)
+		{}'.format(STORY_VIDEO_WITH_DYNAMIC_OVERLAY_FILE_PATH)
 	data = subprocess.check_output(['bash', '-c', cmd])
 	data = data.decode('utf-8') # binary to utf-8 string
 	data = json.loads(data)
@@ -91,5 +91,6 @@ if __name__ == '__main__':
 	indexes = get_audio_indexes()
 	audio_file_paths, audio_maps = compute_audio_maps(indexes)
 	extract_audios_and_video(audio_maps)
+	audio_file_paths.append(MUSIC_FILE_PATH)
 	merge_audios(audio_file_paths)
 	merge_audio_and_video()
