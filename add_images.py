@@ -34,7 +34,8 @@ def create_transitions(transition_file_path, mid_offset, video_file_paths):
 	output_file_paths = []
 	last_i = len(video_file_paths)
 
-	for i, video_file_path in enumerate(video_file_paths):
+	# +1 accounts for the last transition
+	for i in range(last_i + 1):
 		if not i == 0 and not i == last_i and not TRANSITIONS_BETWEEN_IMAGES_ANIMATION:
 			continue
 		if i == last_i and not TRANSITIONS_END_ANIMATION:
@@ -54,9 +55,7 @@ def create_transitions(transition_file_path, mid_offset, video_file_paths):
 		else:
 			concat_file_paths = (OFFSET_VIDEO_FILE_PATH,)
 
-		filename = video_file_path.split('/')[-1]
-		filename = filename.split('.')[0]
-		output_file_path = '{}/{}-transition.{}'.format(STORY_DIR_PATH, filename, VIDEO_FMT)
+		output_file_path = '{}/{}-transition.{}'.format(STORY_DIR_PATH, i, VIDEO_FMT)
 		output_file_paths.append(output_file_path)
 
 		concat_videos(concat_file_paths, output_file_path)
