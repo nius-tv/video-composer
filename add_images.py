@@ -63,9 +63,18 @@ def create_transitions(transition_file_path, mid_offset, video_file_paths):
 	return output_file_paths
 
 
-def generate_offset_video(duration):
+def create_solid_video(image_file_path, video_file_path, duration, color):
+	img = Image.new('RGBA', VIDEO_SIZE, color)
+	img.save(image_file_path)
+	# Generate video
+	image_to_video(image_file_path,
+				   video_file_path,
+				   duration)
+
+
+def generate_offset_video(duration, video_file_path=TRANSPARENT_VIDEO_FILE_PATH):
 	tmp_output_file_path = get_tmp_file_path(OFFSET_VIDEO_FILE_PATH)
-	cut_video(TRANSPARENT_VIDEO_FILE_PATH, tmp_output_file_path, duration)
+	cut_video(video_file_path, tmp_output_file_path, duration)
 	generate_silence_audio(duration)
 	add_audio_to_video(SILENCE_AUDIO_FILE_PATH,
 					   tmp_output_file_path,
@@ -144,13 +153,16 @@ def load_transitions():
 if __name__ == '__main__':
 	story = load_story()
 	transitions = load_transitions()
-	# Create transparent image
-	img = Image.new('RGBA', VIDEO_SIZE, (0, 0, 0, 0))
-	img.save(TRANSPARENT_IMAGE_FILE_PATH)
-	# Generate initial transparent video
-	image_to_video(TRANSPARENT_IMAGE_FILE_PATH,
-				   TRANSPARENT_VIDEO_FILE_PATH,
-				   TRANSPARENT_VIDEO_DURATION)
+	# Create transparent video
+	image_file_path = TRANSPARENT_IMAGE_FILE_PATH
+	video_file_path = TRANSPARENT_VIDEO_FILE_PATH
+	duration = TRANSPARENT_VIDEO_DURATION
+	create_solid_video(image_file_path, video_file_path, duration, color=(0, 0, 0, 0))
+	# Create black video
+	image_file_path = BLACK_IMAGE_FILE_PATH
+	video_file_path = BLACK_VIDEO_FILE_PATH
+	duration = BLACK_VIDEO_DURATION
+	create_solid_video(image_file_path, video_file_path, duration, color=(0, 0, 0, 1))
 	# Generate offset video with audio from transparent video
 	transitions_start = story['transitions']['start']
 	if transitions_start > 0:
@@ -184,13 +196,20 @@ if __name__ == '__main__':
 	# Check story duration against images video
 	duration_story = get_duration(STORY_WITH_BACKGROUND_VIDEO_FILE_PATH)
 	duration_images = get_duration(IMAGES_VIDEO_FILE_PATH)
+	duration_transitions = get_duration(TRANSITIONS_FILE_PATH)
 
-	if duration_story > duration_images:
+	max_duration = max(duration_story, duration_transitions)
+
+	if max_duration > duration_images:
 			# Copy images video to tmp file
 			tmp_file_path = get_tmp_file_path(IMAGES_VIDEO_FILE_PATH)
 			copyfile(IMAGES_VIDEO_FILE_PATH, tmp_file_path)
 			# Add transparent video to prevent the last image from "sticking"
-			generate_offset_video(duration_story - duration_images)
+			if duration_story > duration_transitions:
+				generate_offset_video(max_duration - duration_images)
+			else:
+				generate_offset_video(max_duration - duration_images,
+									  video_file_path=BLACK_VIDEO_FILE_PATH)
 			video_file_paths = [
 				tmp_file_path,
 				OFFSET_VIDEO_FILE_PATH
