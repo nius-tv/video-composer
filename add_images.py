@@ -162,7 +162,7 @@ if __name__ == '__main__':
 	image_file_path = BLACK_IMAGE_FILE_PATH
 	video_file_path = BLACK_VIDEO_FILE_PATH
 	duration = BLACK_VIDEO_DURATION
-	create_solid_video(image_file_path, video_file_path, duration, color=(0, 0, 0, 1))
+	create_solid_video(image_file_path, video_file_path, duration, color=(0, 0, 0, 255))
 	# Generate offset video with audio from transparent video
 	transitions_start = story['transitions']['start']
 	if transitions_start > 0:
