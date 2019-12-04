@@ -59,4 +59,4 @@ if __name__ == '__main__':
 		BACKGROUND_WITH_AUDIO_FILE_PATH,
 		PADDED_STORY_VIDEO_FILE_PATH
 	)
-	overlay_videos(video_file_paths, STORY_WITH_BACKGROUND_VIDEO_FILE_PATH)
+	overlay_videos(video_file_paths, STORY_VIDEO_WITH_BACKGROUND_FILE_PATH)

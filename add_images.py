@@ -194,7 +194,7 @@ if __name__ == '__main__':
 	elif num_transitions == 1:
 		copyfile(transition_file_paths[0], TRANSITIONS_FILE_PATH)
 	# Check story duration against images video
-	duration_story = get_duration(STORY_WITH_BACKGROUND_VIDEO_FILE_PATH)
+	duration_story = get_duration(STORY_VIDEO_WITH_BACKGROUND_FILE_PATH)
 	duration_images = get_duration(IMAGES_VIDEO_FILE_PATH)
 	duration_transitions = get_duration(TRANSITIONS_FILE_PATH)
 
@@ -226,7 +226,7 @@ if __name__ == '__main__':
 		copyfile(IMAGES_VIDEO_FILE_PATH, IMAGES_TRANSITIONS_FILE_PATH)
 	# Combine images with transition with story video
 	video_file_paths = (
-		STORY_WITH_BACKGROUND_VIDEO_FILE_PATH,
+		STORY_VIDEO_WITH_BACKGROUND_FILE_PATH,
 		IMAGES_TRANSITIONS_FILE_PATH
 	)
 	overlay_videos(video_file_paths, COMPOSED_VIDEO_FILE_PATH)

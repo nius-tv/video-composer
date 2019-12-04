@@ -9,7 +9,7 @@ if __name__ == '__main__':
 	story = load_story()
 	oov_frames = story['outOfVocabularyFrames']
 	oov_frames_keys = sorted(oov_frames)
-	duration = get_duration(STORY_WITH_BACKGROUND_VIDEO_FILE_PATH)
+	duration = get_duration(STORY_VIDEO_WITH_BACKGROUND_FILE_PATH)
 
 	if len(oov_frames_keys) > 1:
 		from_sec = float(oov_frames_keys[0]) / FPS
