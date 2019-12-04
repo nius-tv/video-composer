@@ -18,7 +18,7 @@ if __name__ == '__main__':
 		-pix_fmt {pixel_fmt} \
 		-shortest \
 		{output_file_path}'.format(
-			video_file_path=STORY_WITH_MASK_VIDEO_FILE_PATH,
+			video_file_path=STORY_VIDEO_FILE_PATH,
 			background_file_path=PRESENTER_BACKGROUND_VIDEO_FILE_PATH,
 			chroma=CHROMA_SENSITIVITY,
 			overlay=CHROMA_OVERLAY,
