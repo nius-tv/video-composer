@@ -1,6 +1,7 @@
 import subprocess
 
 from config import *
+from google.cloud import error_reporting
 from utils import *
 
 
@@ -42,21 +43,26 @@ def pad_story_video():
 
 
 if __name__ == '__main__':
-	crop_story_video()
-	pad_story_video()
-	# Generate audio for background
-	duration = get_duration(PADDED_STORY_VIDEO_FILE_PATH)
-	generate_silence_audio(duration)
-	# Cut background to match audio duration
-	tmp_bg_file_path = get_tmp_file_path(BACKGROUND_VIDEO_FILE_PATH)
-	cut_video(BACKGROUND_VIDEO_FILE_PATH, tmp_bg_file_path, duration)
-	# Add audio to background
-	add_audio_to_video(SILENCE_AUDIO_FILE_PATH,
-					   tmp_bg_file_path,
-					   BACKGROUND_WITH_AUDIO_FILE_PATH)
-	# Merge background with story
-	video_file_paths = (
-		BACKGROUND_WITH_AUDIO_FILE_PATH,
-		PADDED_STORY_VIDEO_FILE_PATH
-	)
-	overlay_videos(video_file_paths, STORY_VIDEO_WITH_BACKGROUND_FILE_PATH)
+	error_client = error_reporting.Client()
+	try:
+		crop_story_video()
+		pad_story_video()
+		# Generate audio for background
+		duration = get_duration(PADDED_STORY_VIDEO_FILE_PATH)
+		generate_silence_audio(duration)
+		# Cut background to match audio duration
+		tmp_bg_file_path = get_tmp_file_path(BACKGROUND_VIDEO_FILE_PATH)
+		cut_video(BACKGROUND_VIDEO_FILE_PATH, tmp_bg_file_path, duration)
+		# Add audio to background
+		add_audio_to_video(SILENCE_AUDIO_FILE_PATH,
+						   tmp_bg_file_path,
+						   BACKGROUND_WITH_AUDIO_FILE_PATH)
+		# Merge background with story
+		video_file_paths = (
+			BACKGROUND_WITH_AUDIO_FILE_PATH,
+			PADDED_STORY_VIDEO_FILE_PATH
+		)
+		overlay_videos(video_file_paths, STORY_VIDEO_WITH_BACKGROUND_FILE_PATH)
+	except Exception:
+		error_client.report_exception()
+		raise

@@ -3,6 +3,7 @@ import subprocess
 import yaml
 
 from config import *
+from google.cloud import error_reporting
 from PIL import Image
 from shutil import copyfile
 from utils import *
@@ -151,82 +152,87 @@ def load_transitions():
 
 
 if __name__ == '__main__':
-	story = load_story()
-	transitions = load_transitions()
-	# Create transparent video
-	image_file_path = TRANSPARENT_IMAGE_FILE_PATH
-	video_file_path = TRANSPARENT_VIDEO_FILE_PATH
-	duration = TRANSPARENT_VIDEO_DURATION
-	create_solid_video(image_file_path, video_file_path, duration, color=(0, 0, 0, 0))
-	# Create black video
-	image_file_path = BLACK_IMAGE_FILE_PATH
-	video_file_path = BLACK_VIDEO_FILE_PATH
-	duration = BLACK_VIDEO_DURATION
-	create_solid_video(image_file_path, video_file_path, duration, color=(0, 0, 0, 255))
-	# Generate offset video with audio from transparent video
-	transitions_start = story['transitions']['start']
-	if transitions_start > 0:
-		generate_offset_video(transitions_start)
-	# Generate videos from story images
-	num_images = story['transitions']['numImages']
-	images = story['images'][0:num_images]
-	assert num_images == len(images)
-	video_file_paths = images_to_videos(images)
+	error_client = error_reporting.Client()
+	try:
+		story = load_story()
+		transitions = load_transitions()
+		# Create transparent video
+		image_file_path = TRANSPARENT_IMAGE_FILE_PATH
+		video_file_path = TRANSPARENT_VIDEO_FILE_PATH
+		duration = TRANSPARENT_VIDEO_DURATION
+		create_solid_video(image_file_path, video_file_path, duration, color=(0, 0, 0, 0))
+		# Create black video
+		image_file_path = BLACK_IMAGE_FILE_PATH
+		video_file_path = BLACK_VIDEO_FILE_PATH
+		duration = BLACK_VIDEO_DURATION
+		create_solid_video(image_file_path, video_file_path, duration, color=(0, 0, 0, 255))
+		# Generate offset video with audio from transparent video
+		transitions_start = story['transitions']['start']
+		if transitions_start > 0:
+			generate_offset_video(transitions_start)
+		# Generate videos from story images
+		num_images = story['transitions']['numImages']
+		images = story['images'][0:num_images]
+		assert num_images == len(images)
+		video_file_paths = images_to_videos(images)
 
-	if transitions_start > 0:
-		concat_file_paths = [OFFSET_VIDEO_FILE_PATH]
-		concat_file_paths.extend(video_file_paths)
-		concat_videos(concat_file_paths, IMAGES_VIDEO_FILE_PATH)
-	else:
-		concat_videos(video_file_paths, IMAGES_VIDEO_FILE_PATH)
-	# Generate transitions
-	default_transition = transitions[TRANSITION_ID]
-	animation_filename = default_transition['name']
-	animation_file_path = '{}/{}'.format(TRANSITIONS_LIBRARY_DIR_PATH, animation_filename)
-	mid_offset = default_transition['mid']
-	transition_file_paths = create_transitions(animation_file_path,
-											   mid_offset,
-											   video_file_paths)
-	# Combine transitions into one
-	num_transitions = len(transition_file_paths)
-	if num_transitions > 1:
-		overlay_videos(transition_file_paths, TRANSITIONS_FILE_PATH)
-	elif num_transitions == 1:
-		copyfile(transition_file_paths[0], TRANSITIONS_FILE_PATH)
-	# Check story duration against images video
-	duration_story = get_duration(STORY_VIDEO_WITH_BACKGROUND_FILE_PATH)
-	duration_images = get_duration(IMAGES_VIDEO_FILE_PATH)
-	duration_transitions = get_duration(TRANSITIONS_FILE_PATH)
-
-	max_duration = max(duration_story, duration_transitions)
-
-	if max_duration > duration_images:
-			# Copy images video to tmp file
-			tmp_file_path = get_tmp_file_path(IMAGES_VIDEO_FILE_PATH)
-			copyfile(IMAGES_VIDEO_FILE_PATH, tmp_file_path)
-			# Add transparent video to prevent the last image from "sticking"
-			if duration_story > duration_transitions:
-				generate_offset_video(max_duration - duration_images)
-			else:
-				generate_offset_video(max_duration - duration_images,
-									  video_file_path=BLACK_VIDEO_FILE_PATH)
-			video_file_paths = [
-				tmp_file_path,
-				OFFSET_VIDEO_FILE_PATH
-			]
+		if transitions_start > 0:
+			concat_file_paths = [OFFSET_VIDEO_FILE_PATH]
+			concat_file_paths.extend(video_file_paths)
+			concat_videos(concat_file_paths, IMAGES_VIDEO_FILE_PATH)
+		else:
 			concat_videos(video_file_paths, IMAGES_VIDEO_FILE_PATH)
-	# Combine images with transitions
-	if num_transitions > 0:
+		# Generate transitions
+		default_transition = transitions[TRANSITION_ID]
+		animation_filename = default_transition['name']
+		animation_file_path = '{}/{}'.format(TRANSITIONS_LIBRARY_DIR_PATH, animation_filename)
+		mid_offset = default_transition['mid']
+		transition_file_paths = create_transitions(animation_file_path,
+												   mid_offset,
+												   video_file_paths)
+		# Combine transitions into one
+		num_transitions = len(transition_file_paths)
+		if num_transitions > 1:
+			overlay_videos(transition_file_paths, TRANSITIONS_FILE_PATH)
+		elif num_transitions == 1:
+			copyfile(transition_file_paths[0], TRANSITIONS_FILE_PATH)
+		# Check story duration against images video
+		duration_story = get_duration(STORY_VIDEO_WITH_BACKGROUND_FILE_PATH)
+		duration_images = get_duration(IMAGES_VIDEO_FILE_PATH)
+		duration_transitions = get_duration(TRANSITIONS_FILE_PATH)
+
+		max_duration = max(duration_story, duration_transitions)
+
+		if max_duration > duration_images:
+				# Copy images video to tmp file
+				tmp_file_path = get_tmp_file_path(IMAGES_VIDEO_FILE_PATH)
+				copyfile(IMAGES_VIDEO_FILE_PATH, tmp_file_path)
+				# Add transparent video to prevent the last image from "sticking"
+				if duration_story > duration_transitions:
+					generate_offset_video(max_duration - duration_images)
+				else:
+					generate_offset_video(max_duration - duration_images,
+										  video_file_path=BLACK_VIDEO_FILE_PATH)
+				video_file_paths = [
+					tmp_file_path,
+					OFFSET_VIDEO_FILE_PATH
+				]
+				concat_videos(video_file_paths, IMAGES_VIDEO_FILE_PATH)
+		# Combine images with transitions
+		if num_transitions > 0:
+			video_file_paths = (
+				IMAGES_VIDEO_FILE_PATH,
+				TRANSITIONS_FILE_PATH
+			)
+			overlay_videos(video_file_paths, IMAGES_TRANSITIONS_FILE_PATH)
+		else:
+			copyfile(IMAGES_VIDEO_FILE_PATH, IMAGES_TRANSITIONS_FILE_PATH)
+		# Combine images with transition with story video
 		video_file_paths = (
-			IMAGES_VIDEO_FILE_PATH,
-			TRANSITIONS_FILE_PATH
+			STORY_VIDEO_WITH_BACKGROUND_FILE_PATH,
+			IMAGES_TRANSITIONS_FILE_PATH
 		)
-		overlay_videos(video_file_paths, IMAGES_TRANSITIONS_FILE_PATH)
-	else:
-		copyfile(IMAGES_VIDEO_FILE_PATH, IMAGES_TRANSITIONS_FILE_PATH)
-	# Combine images with transition with story video
-	video_file_paths = (
-		STORY_VIDEO_WITH_BACKGROUND_FILE_PATH,
-		IMAGES_TRANSITIONS_FILE_PATH
-	)
-	overlay_videos(video_file_paths, COMPOSED_VIDEO_FILE_PATH)
+		overlay_videos(video_file_paths, COMPOSED_VIDEO_FILE_PATH)
+	except Exception:
+		error_client.report_exception()
+		raise

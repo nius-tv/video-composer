@@ -2,6 +2,7 @@ import json
 import subprocess
 
 from config import *
+from google.cloud import error_reporting
 from utils import *
 
 
@@ -96,10 +97,15 @@ def merge_audios(file_paths, duration):
 
 
 if __name__ == '__main__':
-	indexes = get_audio_indexes()
-	audio_file_paths, audio_maps = compute_audio_maps(indexes)
-	extract_audios_and_video(audio_maps)
-	duration = get_duration(STORY_VIDEO_WITH_DYNAMIC_OVERLAY_FILE_PATH)
-	audio_file_paths.append(MUSIC_FILE_PATH)
-	merge_audios(audio_file_paths, duration)
-	merge_audio_and_video()
+	error_client = error_reporting.Client()
+	try:
+		indexes = get_audio_indexes()
+		audio_file_paths, audio_maps = compute_audio_maps(indexes)
+		extract_audios_and_video(audio_maps)
+		duration = get_duration(STORY_VIDEO_WITH_DYNAMIC_OVERLAY_FILE_PATH)
+		audio_file_paths.append(MUSIC_FILE_PATH)
+		merge_audios(audio_file_paths, duration)
+		merge_audio_and_video()
+	except Exception:
+		error_client.report_exception()
+		raise
