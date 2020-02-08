@@ -25,11 +25,11 @@ if __name__ == '__main__':
 				from_sec < float(TRANSITIONS_MAX_START):
 				start = from_sec
 
-			elif random.randrange(5) > 0 and \
+			elif random.randrange(10) > 0 and \
 				from_sec > float(TRANSITIONS_MAX_START):
 				start = random.randrange(TRANSITIONS_MIN_START, TRANSITIONS_MAX_START)
 
-		elif random.randrange(5) > 0:
+		elif random.randrange(10) > 0:
 			start = random.randrange(TRANSITIONS_MIN_START, TRANSITIONS_MAX_START)
 
 		story_images = len(story['images'])
@@ -39,7 +39,7 @@ if __name__ == '__main__':
 
 		num_images = math.ceil((duration - start) / float(IMAGE_DURATION))
 
-		if random.randrange(5) > 0 and \
+		if random.randrange(10) > 0 and \
 			(num_images - 1) * IMAGE_DURATION > to_sec - start:
 			num_images -= 1
 
