@@ -70,7 +70,8 @@ def create_solid_video(image_file_path, video_file_path, duration, color):
 	# Generate video
 	image_to_video(image_file_path,
 				   video_file_path,
-				   duration)
+				   duration,
+				   False)
 
 
 def generate_offset_video(duration, video_file_path=TRANSPARENT_VIDEO_FILE_PATH):
@@ -95,7 +96,7 @@ def get_formulas():
 		)
 
 
-def image_to_video(image_file_path, output_file_path, duration=IMAGE_DURATION):
+def image_to_video(image_file_path, output_file_path, duration, use_bg):
 	tmp_output_file_path = get_tmp_file_path(output_file_path)
 	image = Image.open(image_file_path)
 	formulas = get_formulas()
@@ -123,11 +124,24 @@ def image_to_video(image_file_path, output_file_path, duration=IMAGE_DURATION):
 			pixel_fmt=PIXEL_FMT,
 			output_file_path=tmp_output_file_path)
 	subprocess.call(['bash', '-c', cmd])
-
+	# Add audio
+	if use_bg:
+		tmp_with_audio_output_file_path = get_tmp_file_path(tmp_output_file_path)
+	else:
+		tmp_with_audio_output_file_path = output_file_path
 	generate_silence_audio(duration)
 	add_audio_to_video(SILENCE_AUDIO_FILE_PATH,
 					   tmp_output_file_path,
-					   output_file_path)
+					   tmp_with_audio_output_file_path)
+	# Add bg video
+	if not use_bg:
+		return
+
+	video_file_paths = (
+		image_bg_video_file_path,
+		tmp_with_audio_output_file_path
+	)
+	overlay_videos(video_file_paths, output_file_path)
 
 
 def images_to_videos(images):
@@ -140,7 +154,7 @@ def images_to_videos(images):
 		output_file_paths.append(output_file_path)
 
 		input_file_path = '{}/{}'.format(STORY_DIR_PATH, image_name)
-		image_to_video(input_file_path, output_file_path)
+		image_to_video(input_file_path, output_file_path, IMAGE_DURATION, True)
 
 	return output_file_paths
 
@@ -156,6 +170,15 @@ if __name__ == '__main__':
 	try:
 		story = load_story()
 		transitions = load_transitions()
+		# Create image background video
+		tmp_file_path = get_tmp_file_path(BACKGROUND_VIDEO_FILE_PATH)
+		cut_video(BACKGROUND_VIDEO_FILE_PATH, tmp_file_path, IMAGE_DURATION)
+
+		generate_silence_audio(IMAGE_DURATION)
+		image_bg_video_file_path = get_tmp_file_path(tmp_file_path)
+		add_audio_to_video(SILENCE_AUDIO_FILE_PATH,
+			tmp_file_path,
+			image_bg_video_file_path)
 		# Create transparent video
 		image_file_path = TRANSPARENT_IMAGE_FILE_PATH
 		video_file_path = TRANSPARENT_VIDEO_FILE_PATH
