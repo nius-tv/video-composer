@@ -8,7 +8,7 @@ build image:
   stage: build
   image: $CI_RUNNER_IMG
   services:
-    - docker:dind
+    - docker:19.03.5-dind
   script:
     # Init Google Cloud SDK
     - echo "$GCP_SERVICE_ACCOUNT" >> "$HOME/gcp-service-account.json"
