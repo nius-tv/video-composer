@@ -103,7 +103,8 @@ if __name__ == '__main__':
 		audio_file_paths, audio_maps = compute_audio_maps(indexes)
 		extract_audios_and_video(audio_maps)
 		duration = get_duration(STORY_VIDEO_WITH_DYNAMIC_OVERLAY_FILE_PATH)
-		audio_file_paths.append(MUSIC_FILE_PATH)
+		audio_file_path = load_story()['library']['musicFilePath']
+		audio_file_paths.append(audio_file_path)
 		merge_audios(audio_file_paths, duration)
 		merge_audio_and_video()
 	except Exception:

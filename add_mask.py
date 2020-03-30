@@ -6,10 +6,12 @@ from utils import *
 if __name__ == '__main__':
 	error_client = error_reporting.Client()
 	try:
+		story = load_story()
 		duration = get_duration(STORY_VIDEO_NO_AUDIO_FILE_PATH)
 		# Cut mask to match story duration
-		tmp_mask_file_path = get_tmp_file_path(MASK_FILE_PATH)
-		cut_video(MASK_FILE_PATH, tmp_mask_file_path, duration)
+		mask_video_file_path = story['library']['maskVideoFilePath']
+		tmp_mask_file_path = get_tmp_file_path(mask_video_file_path)
+		cut_video(mask_video_file_path, tmp_mask_file_path, duration)
 
 		video_file_paths = (
 			STORY_VIDEO_NO_AUDIO_FILE_PATH,

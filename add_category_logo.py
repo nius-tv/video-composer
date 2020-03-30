@@ -7,7 +7,7 @@ if __name__ == '__main__':
 	error_client = error_reporting.Client()
 	try:
 		category = load_story()['category']
-		category_video_file_path = '{}/{}.{}'.format(CATEGORY_VIDEO_DIR_PATH, category, VIDEO_FMT)
+		category_video_file_path = '{}/{}/{}.{}'.format(CATEGORY_VIDEO_DIR_PATH, category, SPECS, VIDEO_FMT)
 		duration = get_duration(category_video_file_path)
 		generate_silence_audio(duration)
 		add_audio_to_video(SILENCE_AUDIO_FILE_PATH,

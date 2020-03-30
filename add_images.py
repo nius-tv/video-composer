@@ -159,8 +159,8 @@ def images_to_videos(images):
 	return output_file_paths
 
 
-def load_transitions():
-	with open(TRANSITION_FILE_PATH) as f:
+def load_transition():
+	with open(story['library']['transitionFilePath']) as f:
 		data = f.read()
 	return yaml.load(data, Loader=yaml.FullLoader)
 
@@ -169,10 +169,10 @@ if __name__ == '__main__':
 	error_client = error_reporting.Client()
 	try:
 		story = load_story()
-		transitions = load_transitions()
 		# Create image background video
-		tmp_file_path = get_tmp_file_path(BACKGROUND_VIDEO_FILE_PATH)
-		cut_video(BACKGROUND_VIDEO_FILE_PATH, tmp_file_path, IMAGE_DURATION)
+		bg_video_file_path = story['library']['bgVideoFilePath']
+		tmp_file_path = get_tmp_file_path(bg_video_file_path)
+		cut_video(bg_video_file_path, tmp_file_path, IMAGE_DURATION)
 
 		generate_silence_audio(IMAGE_DURATION)
 		image_bg_video_file_path = get_tmp_file_path(tmp_file_path)
@@ -206,12 +206,8 @@ if __name__ == '__main__':
 		else:
 			concat_videos(video_file_paths, IMAGES_VIDEO_FILE_PATH)
 		# Generate transitions
-		default_transition = transitions[TRANSITION_ID]
-		animation_filename = default_transition['name']
-		animation_file_path = '{}/{}'.format(TRANSITIONS_LIBRARY_DIR_PATH, animation_filename)
-		mid_offset = default_transition['mid']
-		transition_file_paths = create_transitions(animation_file_path,
-												   mid_offset,
+		transition_file_paths = create_transitions(story['library']['transitionVideoFilePath'],
+												   load_transition()['mid'],
 												   video_file_paths)
 		# Combine transitions into one
 		num_transitions = len(transition_file_paths)

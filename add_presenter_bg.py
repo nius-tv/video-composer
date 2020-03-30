@@ -8,6 +8,7 @@ from utils import *
 if __name__ == '__main__':
 	error_client = error_reporting.Client()
 	try:
+		story = load_story()
 		duration = get_duration(STORY_VIDEO_FILE_PATH)
 		cmd = 'ffmpeg \
 			-y \
@@ -25,7 +26,7 @@ if __name__ == '__main__':
 			-pix_fmt {pixel_fmt} \
 			{output_file_path}'.format(
 				video_file_path=STORY_VIDEO_FILE_PATH,
-				background_file_path=PRESENTER_BACKGROUND_VIDEO_FILE_PATH,
+				background_file_path=story['library']['presenterBgVideoFilePath'],
 				chroma=CHROMA_SENSITIVITY,
 				overlay=CHROMA_OVERLAY,
 				duration=duration,
