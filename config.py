@@ -9,6 +9,7 @@ SPECS = '30fps-512x1024'
 STORY_DIR_PATH = '/data'
 VIDEO_FMT = os.environ.get('VIDEO_FMT')
 # End of sensitive variables.
+ADJUSTED_VIDEO_FILE_PATH = '{}/adjusted-story.{}'.format(STORY_DIR_PATH, VIDEO_FMT)
 AUDIO_CODEC = os.environ.get('AUDIO_CODEC')
 AUDIO_TRACKS_FILE_PATH = '{}/audio-tracks.{}'.format(STORY_DIR_PATH, AUDIO_FMT)
 BACKGROUND_PADDING = 12 # in pixels
