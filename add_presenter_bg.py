@@ -15,7 +15,7 @@ if __name__ == '__main__':
 			-i {video_file_path} \
 			-i {background_file_path} \
 			-filter_complex " \
-				[0:v]colorkey=green:{chroma}:{overlay}[v0]; \
+				[0:v]colorkey={color}:{chroma}:{overlay}[v0]; \
 				[1:v][v0]overlay[v1]" \
 			-map [v1] \
 			-map 0:a \
@@ -27,6 +27,7 @@ if __name__ == '__main__':
 			{output_file_path}'.format(
 				video_file_path=STORY_VIDEO_FILE_PATH,
 				background_file_path=story['library']['presenterBgVideoFilePath'],
+				color=CHROMA_COLOR,
 				chroma=CHROMA_SENSITIVITY,
 				overlay=CHROMA_OVERLAY,
 				duration=duration,
