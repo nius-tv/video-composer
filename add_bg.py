@@ -14,9 +14,9 @@ def crop_story_video():
 		-pix_fmt {pixel_fmt} \
 		{output_file_path}'.format(
 			input_file_path=STORY_VIDEO_WITH_PRESENTER_BG_FILE_PATH,
-			width=VIDEO_SIZE[0] - (BACKGROUND_PADDING * 2),
-			height=VIDEO_SIZE[1] - (BACKGROUND_PADDING * 2),
-			padding=BACKGROUND_PADDING,
+			width=VIDEO_SIZE[0] - (bg_padding * 2),
+			height=VIDEO_SIZE[1] - (bg_padding * 2),
+			padding=bg_padding,
 			video_codec=VIDEO_CODEC,
 			pixel_fmt=PIXEL_FMT,
 			output_file_path=CROPPED_STORY_VIDEO_FILE_PATH)
@@ -35,7 +35,7 @@ def pad_story_video():
 			input_file_path=CROPPED_STORY_VIDEO_FILE_PATH,
 			width=VIDEO_SIZE[0],
 			height=VIDEO_SIZE[1],
-			padding=BACKGROUND_PADDING,
+			padding=bg_padding,
 			video_codec=VIDEO_CODEC,
 			pixel_fmt=PIXEL_FMT,
 			output_file_path=PADDED_STORY_VIDEO_FILE_PATH)
@@ -46,6 +46,7 @@ if __name__ == '__main__':
 	error_client = error_reporting.Client()
 	try:
 		story = load_story()
+		bg_padding = story['bgPadding']
 		crop_story_video()
 		pad_story_video()
 		# Generate audio for background
