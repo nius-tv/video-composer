@@ -24,7 +24,8 @@ if __name__ == '__main__':
 				-i {input_file_path} \
 				-filter_complex " \
 					[0:v]scale={scale_width}x{scale_height},crop={crop_width}:{crop_height}:y={offset}-(n*{speed})[0v]; \
-					[0v]scale={original_width}x{original_height}[v] \
+					[0v]scale={original_width}x{original_height}[v]" \
+				-map "[v]" \
 				-c:v {video_codec} \
 				-pix_fmt {pixel_fmt} \
 				{output_file_path}'.format(
