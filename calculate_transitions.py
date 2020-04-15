@@ -23,10 +23,10 @@ def calc_images():
 
 		elif random.randrange(10) > 0 and \
 			from_sec > float(TRANSITIONS_MAX_START):
-			start = random.randrange(TRANSITIONS_MIN_START, TRANSITIONS_MAX_START)
+			start = round(random.uniform(TRANSITIONS_MIN_START, TRANSITIONS_MAX_START), 1)
 
 	elif random.randrange(10) > 0:
-		start = random.randrange(TRANSITIONS_MIN_START, TRANSITIONS_MAX_START)
+		start = round(random.uniform(TRANSITIONS_MIN_START, TRANSITIONS_MAX_START), 1)
 
 	story_images = len(story['images'])
 	
