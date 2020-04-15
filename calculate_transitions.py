@@ -59,6 +59,7 @@ if __name__ == '__main__':
 
 		story['transitions'] = {
 			'start': start,
+			'end': start + (num_images * IMAGE_DURATION),
 			'numImages': num_images
 		}
 		save_story(story)
