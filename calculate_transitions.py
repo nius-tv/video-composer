@@ -49,7 +49,7 @@ if __name__ == '__main__':
 	error_client = error_reporting.Client()
 	try:
 		story = load_story()
-		duration = get_duration(STORY_VIDEO_WITH_BACKGROUND_FILE_PATH)
+		duration = story['duration']
 
 		if 'showAnchor' in story and not story['showAnchor']:
 			start = 0
