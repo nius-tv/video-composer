@@ -27,9 +27,9 @@ if __name__ == '__main__':
 			{output_file_path}'.format(
 				video_file_path=STORY_VIDEO_FILE_PATH,
 				background_file_path=story['library']['presenterBgVideoFilePath'],
-				color=story['chromaColor'],
-				chroma=CHROMA_SENSITIVITY,
-				overlay=CHROMA_OVERLAY,
+				color=story['chroma']['color'],
+				chroma=story['chroma']['sensitivity'],
+				overlay=story['chroma']['overlay'],
 				duration=duration,
 				audio_codec=AUDIO_CODEC,
 				video_codec=VIDEO_CODEC,
