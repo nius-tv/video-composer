@@ -53,7 +53,7 @@ if __name__ == '__main__':
 
 		if 'showAnchor' in story and not story['showAnchor']:
 			start = 0
-			num_images = math.ceil(duration / float(IMAGE_DURATION))
+			num_images = math.floor(duration / float(IMAGE_DURATION))
 		else:
 			start, num_images = calc_images()
 
